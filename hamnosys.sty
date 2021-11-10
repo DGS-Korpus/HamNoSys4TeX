@@ -1,0 +1,312 @@
+%%
+%% This is file `hamnosys.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% hamnosys.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2021 Universität Hamburg
+%% 
+%% Created by Marc Schulder, Thomas Hanke
+%% 
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3c
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%% 
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is Marc Schulder.
+%% 
+%% This work consists of the files hamnosys.dtx, hamnosys.ins,
+%% HamNoSysUnicode.ttf, README.md and the derived files
+%% hamnosys.sty, hamnosys.pdf and hamnosys.bib.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+\ProvidesPackage{hamnosys}
+    [2021/12/14 v1.0.0 Use HamNoSys in TeX]
+
+
+
+\RequirePackage{iftex}
+\ifXeTeX
+\else
+ \ifLuaTeX
+ \else
+   \PackageError{hamnosys}{XeTeX or LuaTeX required}{The hamnosys package
+    requires either LuaTeX or XeTeX. You must change your typesetting engine
+    to, e.g., "xelatex" or "lualatex"instead of "latex" or "pdflatex".}
+ \fi
+\fi
+\RequirePackage{fontspec}
+\RequirePackage{ifthen}
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{family=hns, prefix=hns@}
+
+\DeclareBoolOption{autofont}
+
+\ProcessKeyvalOptions{hns}
+\newfontfamily\hamnosysfont{HamNoSysUnicode}[
+    Path=./,
+    UprightFont=HamNoSysUnicode.ttf,
+    ]
+\newcommand{\texthamnosys}[1]{{\hamnosysfont #1}}
+
+\ifthenelse{\boolean{hns@autofont}}{%
+  \ifXeTeX
+  \RequirePackage[Latin, PrivateUseArea]{ucharclasses}
+
+  \setTransitionsFor{PrivateUseArea}%
+    {\let\curfamily\f@family\let\curshape\f@shape\let\curseries\f@series\hamnosysfont}
+    {\fontfamily{\curfamily}\fontshape{\curshape}\fontseries{\curseries}\selectfont}
+  \else
+    \PackageWarning{hamnosys}{Option autofont only available in XeTeX.}
+\fi}{}
+
+\DeclareTextCommand{\hamfist}{TU}{\texthamnosys{\char "E000}}
+\DeclareTextCommand{\hamflathand}{TU}{\texthamnosys{\char "E001}}
+\DeclareTextCommand{\hamfingertwo}{TU}{\texthamnosys{\char "E002}}
+\DeclareTextCommand{\hamfingertwothree}{TU}{\texthamnosys{\char "E003}}
+\DeclareTextCommand{\hamfingertwothreespread}{TU}{\texthamnosys{\char "E004}}
+\DeclareTextCommand{\hamfingertwothreefourfive}{TU}{\texthamnosys{\char "E005}}
+\DeclareTextCommand{\hampinchonetwo}{TU}{\texthamnosys{\char "E006}}
+\DeclareTextCommand{\hampinchall}{TU}{\texthamnosys{\char "E007}}
+\DeclareTextCommand{\hampinchonetwoopen}{TU}{\texthamnosys{\char "E008}}
+\DeclareTextCommand{\hamceeonetwo}{TU}{\texthamnosys{\char "E009}}
+\DeclareTextCommand{\hamceeall}{TU}{\texthamnosys{\char "E00A}}
+\DeclareTextCommand{\hamceeopen}{TU}{\texthamnosys{\char "E00B}}
+\DeclareTextCommand{\hamthumboutmod}{TU}{\texthamnosys{\char "E00C}}
+\DeclareTextCommand{\hamthumbacrossmod}{TU}{\texthamnosys{\char "E00D}}
+\DeclareTextCommand{\hamthumbopenmod}{TU}{\texthamnosys{\char "E00E}}
+\DeclareTextCommand{\hamfingerstraightmod}{TU}{\texthamnosys{\char "E010}}
+\DeclareTextCommand{\hamfingerbendmod}{TU}{\texthamnosys{\char "E011}}
+\DeclareTextCommand{\hamfingerhookmod}{TU}{\texthamnosys{\char "E012}}
+\DeclareTextCommand{\hamdoublebent}{TU}{\texthamnosys{\char "E013}}
+\DeclareTextCommand{\hamdoublehooked}{TU}{\texthamnosys{\char "E014}}
+\DeclareTextCommand{\hamextfingeru}{TU}{\texthamnosys{\char "E020}}
+\DeclareTextCommand{\hamextfingerur}{TU}{\texthamnosys{\char "E021}}
+\DeclareTextCommand{\hamextfingerr}{TU}{\texthamnosys{\char "E022}}
+\DeclareTextCommand{\hamextfingerdr}{TU}{\texthamnosys{\char "E023}}
+\DeclareTextCommand{\hamextfingerd}{TU}{\texthamnosys{\char "E024}}
+\DeclareTextCommand{\hamextfingerdl}{TU}{\texthamnosys{\char "E025}}
+\DeclareTextCommand{\hamextfingerl}{TU}{\texthamnosys{\char "E026}}
+\DeclareTextCommand{\hamextfingerul}{TU}{\texthamnosys{\char "E027}}
+\DeclareTextCommand{\hamextfingerol}{TU}{\texthamnosys{\char "E028}}
+\DeclareTextCommand{\hamextfingero}{TU}{\texthamnosys{\char "E029}}
+\DeclareTextCommand{\hamextfingeror}{TU}{\texthamnosys{\char "E02A}}
+\DeclareTextCommand{\hamextfingeril}{TU}{\texthamnosys{\char "E02B}}
+\DeclareTextCommand{\hamextfingeri}{TU}{\texthamnosys{\char "E02C}}
+\DeclareTextCommand{\hamextfingerir}{TU}{\texthamnosys{\char "E02D}}
+\DeclareTextCommand{\hamextfingerui}{TU}{\texthamnosys{\char "E02E}}
+\DeclareTextCommand{\hamextfingerdi}{TU}{\texthamnosys{\char "E02F}}
+\DeclareTextCommand{\hamextfingerdo}{TU}{\texthamnosys{\char "E030}}
+\DeclareTextCommand{\hamextfingeruo}{TU}{\texthamnosys{\char "E031}}
+\DeclareTextCommand{\hampalmu}{TU}{\texthamnosys{\char "E038}}
+\DeclareTextCommand{\hampalmur}{TU}{\texthamnosys{\char "E039}}
+\DeclareTextCommand{\hampalmr}{TU}{\texthamnosys{\char "E03A}}
+\DeclareTextCommand{\hampalmdr}{TU}{\texthamnosys{\char "E03B}}
+\DeclareTextCommand{\hampalmd}{TU}{\texthamnosys{\char "E03C}}
+\DeclareTextCommand{\hampalmdl}{TU}{\texthamnosys{\char "E03D}}
+\DeclareTextCommand{\hampalml}{TU}{\texthamnosys{\char "E03E}}
+\DeclareTextCommand{\hampalmul}{TU}{\texthamnosys{\char "E03F}}
+\DeclareTextCommand{\hamhead}{TU}{\texthamnosys{\char "E040}}
+\DeclareTextCommand{\hamheadtop}{TU}{\texthamnosys{\char "E041}}
+\DeclareTextCommand{\hamforehead}{TU}{\texthamnosys{\char "E042}}
+\DeclareTextCommand{\hameyebrows}{TU}{\texthamnosys{\char "E043}}
+\DeclareTextCommand{\hameyes}{TU}{\texthamnosys{\char "E044}}
+\DeclareTextCommand{\hamnose}{TU}{\texthamnosys{\char "E045}}
+\DeclareTextCommand{\hamnostrils}{TU}{\texthamnosys{\char "E046}}
+\DeclareTextCommand{\hamear}{TU}{\texthamnosys{\char "E047}}
+\DeclareTextCommand{\hamearlobe}{TU}{\texthamnosys{\char "E048}}
+\DeclareTextCommand{\hamcheek}{TU}{\texthamnosys{\char "E049}}
+\DeclareTextCommand{\hamlips}{TU}{\texthamnosys{\char "E04A}}
+\DeclareTextCommand{\hamtongue}{TU}{\texthamnosys{\char "E04B}}
+\DeclareTextCommand{\hamteeth}{TU}{\texthamnosys{\char "E04C}}
+\DeclareTextCommand{\hamchin}{TU}{\texthamnosys{\char "E04D}}
+\DeclareTextCommand{\hamunderchin}{TU}{\texthamnosys{\char "E04E}}
+\DeclareTextCommand{\hamneck}{TU}{\texthamnosys{\char "E04F}}
+\DeclareTextCommand{\hamshouldertop}{TU}{\texthamnosys{\char "E050}}
+\DeclareTextCommand{\hamshoulders}{TU}{\texthamnosys{\char "E051}}
+\DeclareTextCommand{\hamchest}{TU}{\texthamnosys{\char "E052}}
+\DeclareTextCommand{\hamstomach}{TU}{\texthamnosys{\char "E053}}
+\DeclareTextCommand{\hambelowstomach}{TU}{\texthamnosys{\char "E054}}
+\DeclareTextCommand{\hamneutralspace}{TU}{\texthamnosys{\char "E05F}}
+\DeclareTextCommand{\hamupperarm}{TU}{\texthamnosys{\char "E060}}
+\DeclareTextCommand{\hamelbow}{TU}{\texthamnosys{\char "E061}}
+\DeclareTextCommand{\hamelbowinside}{TU}{\texthamnosys{\char "E062}}
+\DeclareTextCommand{\hamlowerarm}{TU}{\texthamnosys{\char "E063}}
+\DeclareTextCommand{\hamwristback}{TU}{\texthamnosys{\char "E064}}
+\DeclareTextCommand{\hamwristpulse}{TU}{\texthamnosys{\char "E065}}
+\DeclareTextCommand{\hamthumbball}{TU}{\texthamnosys{\char "E066}}
+\DeclareTextCommand{\hampalm}{TU}{\texthamnosys{\char "E067}}
+\DeclareTextCommand{\hamhandback}{TU}{\texthamnosys{\char "E068}}
+\DeclareTextCommand{\hamthumbside}{TU}{\texthamnosys{\char "E069}}
+\DeclareTextCommand{\hampinkyside}{TU}{\texthamnosys{\char "E06A}}
+\DeclareTextCommand{\hamthumb}{TU}{\texthamnosys{\char "E070}}
+\DeclareTextCommand{\hamindexfinger}{TU}{\texthamnosys{\char "E071}}
+\DeclareTextCommand{\hammiddlefinger}{TU}{\texthamnosys{\char "E072}}
+\DeclareTextCommand{\hamringfinger}{TU}{\texthamnosys{\char "E073}}
+\DeclareTextCommand{\hampinky}{TU}{\texthamnosys{\char "E074}}
+\DeclareTextCommand{\hamfingertip}{TU}{\texthamnosys{\char "E075}}
+\DeclareTextCommand{\hamfingernail}{TU}{\texthamnosys{\char "E076}}
+\DeclareTextCommand{\hamfingerpad}{TU}{\texthamnosys{\char "E077}}
+\DeclareTextCommand{\hamfingermidjoint}{TU}{\texthamnosys{\char "E078}}
+\DeclareTextCommand{\hamfingerbase}{TU}{\texthamnosys{\char "E079}}
+\DeclareTextCommand{\hamfingerside}{TU}{\texthamnosys{\char "E07A}}
+\DeclareTextCommand{\hamlrbeside}{TU}{\texthamnosys{\char "E058}}
+\DeclareTextCommand{\hamlrat}{TU}{\texthamnosys{\char "E059}}
+\DeclareTextCommand{\hamcoreftag}{TU}{\texthamnosys{\char "E05A}}
+\DeclareTextCommand{\hamcorefref}{TU}{\texthamnosys{\char "E05B}}
+\DeclareTextCommand{\hammoveu}{TU}{\texthamnosys{\char "E080}}
+\DeclareTextCommand{\hammoveur}{TU}{\texthamnosys{\char "E081}}
+\DeclareTextCommand{\hammover}{TU}{\texthamnosys{\char "E082}}
+\DeclareTextCommand{\hammovedr}{TU}{\texthamnosys{\char "E083}}
+\DeclareTextCommand{\hammoved}{TU}{\texthamnosys{\char "E084}}
+\DeclareTextCommand{\hammovedl}{TU}{\texthamnosys{\char "E085}}
+\DeclareTextCommand{\hammovel}{TU}{\texthamnosys{\char "E086}}
+\DeclareTextCommand{\hammoveul}{TU}{\texthamnosys{\char "E087}}
+\DeclareTextCommand{\hammoveol}{TU}{\texthamnosys{\char "E088}}
+\DeclareTextCommand{\hammoveo}{TU}{\texthamnosys{\char "E089}}
+\DeclareTextCommand{\hammoveor}{TU}{\texthamnosys{\char "E08A}}
+\DeclareTextCommand{\hammoveil}{TU}{\texthamnosys{\char "E08B}}
+\DeclareTextCommand{\hammovei}{TU}{\texthamnosys{\char "E08C}}
+\DeclareTextCommand{\hammoveir}{TU}{\texthamnosys{\char "E08D}}
+\DeclareTextCommand{\hammoveui}{TU}{\texthamnosys{\char "E08E}}
+\DeclareTextCommand{\hammovedi}{TU}{\texthamnosys{\char "E08F}}
+\DeclareTextCommand{\hammovedo}{TU}{\texthamnosys{\char "E090}}
+\DeclareTextCommand{\hammoveuo}{TU}{\texthamnosys{\char "E091}}
+\DeclareTextCommand{\hamcircleo}{TU}{\texthamnosys{\char "E092}}
+\DeclareTextCommand{\hamcirclei}{TU}{\texthamnosys{\char "E093}}
+\DeclareTextCommand{\hamcircled}{TU}{\texthamnosys{\char "E094}}
+\DeclareTextCommand{\hamcircleu}{TU}{\texthamnosys{\char "E095}}
+\DeclareTextCommand{\hamcirclel}{TU}{\texthamnosys{\char "E096}}
+\DeclareTextCommand{\hamcircler}{TU}{\texthamnosys{\char "E097}}
+\DeclareTextCommand{\hamcircleul}{TU}{\texthamnosys{\char "E098}}
+\DeclareTextCommand{\hamcircledr}{TU}{\texthamnosys{\char "E099}}
+\DeclareTextCommand{\hamcircleur}{TU}{\texthamnosys{\char "E09A}}
+\DeclareTextCommand{\hamcircledl}{TU}{\texthamnosys{\char "E09B}}
+\DeclareTextCommand{\hamcircleol}{TU}{\texthamnosys{\char "E09C}}
+\DeclareTextCommand{\hamcircleir}{TU}{\texthamnosys{\char "E09D}}
+\DeclareTextCommand{\hamcircleor}{TU}{\texthamnosys{\char "E09E}}
+\DeclareTextCommand{\hamcircleil}{TU}{\texthamnosys{\char "E09F}}
+\DeclareTextCommand{\hamcircleui}{TU}{\texthamnosys{\char "E0A0}}
+\DeclareTextCommand{\hamcircledo}{TU}{\texthamnosys{\char "E0A1}}
+\DeclareTextCommand{\hamcircleuo}{TU}{\texthamnosys{\char "E0A2}}
+\DeclareTextCommand{\hamcircledi}{TU}{\texthamnosys{\char "E0A3}}
+\DeclareTextCommand{\hamfingerplay}{TU}{\texthamnosys{\char "E0A4}}
+\DeclareTextCommand{\hamnodding}{TU}{\texthamnosys{\char "E0A5}}
+\DeclareTextCommand{\hamswinging}{TU}{\texthamnosys{\char "E0A6}}
+\DeclareTextCommand{\hamtwisting}{TU}{\texthamnosys{\char "E0A7}}
+\DeclareTextCommand{\hamstircw}{TU}{\texthamnosys{\char "E0A8}}
+\DeclareTextCommand{\hamstirccw}{TU}{\texthamnosys{\char "E0A9}}
+\DeclareTextCommand{\hamreplace}{TU}{\texthamnosys{\char "E0AA}}
+\DeclareTextCommand{\hamnomotion}{TU}{\texthamnosys{\char "E0AF}}
+\DeclareTextCommand{\hamclocku}{TU}{\texthamnosys{\char "E0B0}}
+\DeclareTextCommand{\hamclockul}{TU}{\texthamnosys{\char "E0B1}}
+\DeclareTextCommand{\hamclockl}{TU}{\texthamnosys{\char "E0B2}}
+\DeclareTextCommand{\hamclockdl}{TU}{\texthamnosys{\char "E0B3}}
+\DeclareTextCommand{\hamclockd}{TU}{\texthamnosys{\char "E0B4}}
+\DeclareTextCommand{\hamclockdr}{TU}{\texthamnosys{\char "E0B5}}
+\DeclareTextCommand{\hamclockr}{TU}{\texthamnosys{\char "E0B6}}
+\DeclareTextCommand{\hamclockur}{TU}{\texthamnosys{\char "E0B7}}
+\DeclareTextCommand{\hamclockfull}{TU}{\texthamnosys{\char "E0B8}}
+\DeclareTextCommand{\hamarcl}{TU}{\texthamnosys{\char "E0B9}}
+\DeclareTextCommand{\hamarcu}{TU}{\texthamnosys{\char "E0BA}}
+\DeclareTextCommand{\hamarcr}{TU}{\texthamnosys{\char "E0BB}}
+\DeclareTextCommand{\hamarcd}{TU}{\texthamnosys{\char "E0BC}}
+\DeclareTextCommand{\hamwavy}{TU}{\texthamnosys{\char "E0BD}}
+\DeclareTextCommand{\hamzigzag}{TU}{\texthamnosys{\char "E0BE}}
+\DeclareTextCommand{\hamellipseh}{TU}{\texthamnosys{\char "E0C0}}
+\DeclareTextCommand{\hamellipseur}{TU}{\texthamnosys{\char "E0C1}}
+\DeclareTextCommand{\hamellipsev}{TU}{\texthamnosys{\char "E0C2}}
+\DeclareTextCommand{\hamellipseul}{TU}{\texthamnosys{\char "E0C3}}
+\DeclareTextCommand{\hamincreasing}{TU}{\texthamnosys{\char "E0C4}}
+\DeclareTextCommand{\hamdecreasing}{TU}{\texthamnosys{\char "E0C5}}
+\DeclareTextCommand{\hamfast}{TU}{\texthamnosys{\char "E0C8}}
+\DeclareTextCommand{\hamslow}{TU}{\texthamnosys{\char "E0C9}}
+\DeclareTextCommand{\hamtense}{TU}{\texthamnosys{\char "E0CA}}
+\DeclareTextCommand{\hamrest}{TU}{\texthamnosys{\char "E0CB}}
+\DeclareTextCommand{\hamhalt}{TU}{\texthamnosys{\char "E0CC}}
+\DeclareTextCommand{\hamclose}{TU}{\texthamnosys{\char "E0D0}}
+\DeclareTextCommand{\hamtouch}{TU}{\texthamnosys{\char "E0D1}}
+\DeclareTextCommand{\haminterlock}{TU}{\texthamnosys{\char "E0D2}}
+\DeclareTextCommand{\hamcross}{TU}{\texthamnosys{\char "E0D3}}
+\DeclareTextCommand{\hamarmextended}{TU}{\texthamnosys{\char "E0D4}}
+\DeclareTextCommand{\hambehind}{TU}{\texthamnosys{\char "E0D5}}
+\DeclareTextCommand{\hambrushing}{TU}{\texthamnosys{\char "E0D6}}
+\DeclareTextCommand{\hamsmallmod}{TU}{\texthamnosys{\char "E0C6}}
+\DeclareTextCommand{\hamlargemod}{TU}{\texthamnosys{\char "E0C7}}
+\DeclareTextCommand{\hamrepeatfromstart}{TU}{\texthamnosys{\char "E0D8}}
+\DeclareTextCommand{\hamrepeatfromstartseveral}{TU}{\texthamnosys{\char "E0D9}}
+\DeclareTextCommand{\hamrepeatcontinue}{TU}{\texthamnosys{\char "E0DA}}
+\DeclareTextCommand{\hamrepeatcontinueseveral}{TU}{\texthamnosys{\char "E0DB}}
+\DeclareTextCommand{\hamrepeatreverse}{TU}{\texthamnosys{\char "E0DC}}
+\DeclareTextCommand{\hamalternatingmotion}{TU}{\texthamnosys{\char "E0DD}}
+\DeclareTextCommand{\hamseqbegin}{TU}{\texthamnosys{\char "E0E0}}
+\DeclareTextCommand{\hamseqend}{TU}{\texthamnosys{\char "E0E1}}
+\DeclareTextCommand{\hamparbegin}{TU}{\texthamnosys{\char "E0E2}}
+\DeclareTextCommand{\hamparend}{TU}{\texthamnosys{\char "E0E3}}
+\DeclareTextCommand{\hamfusionbegin}{TU}{\texthamnosys{\char "E0E4}}
+\DeclareTextCommand{\hamfusionend}{TU}{\texthamnosys{\char "E0E5}}
+\DeclareTextCommand{\hambetween}{TU}{\texthamnosys{\char "E0E6}}
+\DeclareTextCommand{\hamplus}{TU}{\texthamnosys{\char "E0E7}}
+\DeclareTextCommand{\hamsymmpar}{TU}{\texthamnosys{\char "E0E8}}
+\DeclareTextCommand{\hamsymmlr}{TU}{\texthamnosys{\char "E0E9}}
+\DeclareTextCommand{\hamnondominant}{TU}{\texthamnosys{\char "E0EA}}
+\DeclareTextCommand{\hamnonipsi}{TU}{\texthamnosys{\char "E0EB}}
+\DeclareTextCommand{\hametc}{TU}{\texthamnosys{\char "E0EC}}
+\DeclareTextCommand{\hamorirelative}{TU}{\texthamnosys{\char "E0ED}}
+\DeclareTextCommand{\hammime}{TU}{\texthamnosys{\char "E0F0}}
+\DeclareTextCommand{\hamversionfourzero}{TU}{\texthamnosys{\char "E0F1}}
+\DeclareTextCommand{\hamspace}{TU}{\texthamnosys{\char "20}}
+\DeclareTextCommand{\hamexclaim}{TU}{\texthamnosys{\char "21}}
+\DeclareTextCommand{\hamcomma}{TU}{\texthamnosys{\char "002C}}
+\DeclareTextCommand{\hamfullstop}{TU}{\texthamnosys{\char "002E}}
+\DeclareTextCommand{\hamquery}{TU}{\texthamnosys{\char "003F}}
+\DeclareTextCommand{\hamaltbegin}{TU}{\texthamnosys{\char "007B}}
+\DeclareTextCommand{\hammetaalt}{TU}{\texthamnosys{\char "007C}}
+\DeclareTextCommand{\hamaltend}{TU}{\texthamnosys{\char "007D}}
+\DeclareTextCommand{\hamwristtopulse}{TU}{\texthamnosys{\char "E07C}}
+\DeclareTextCommand{\hamwristtoback}{TU}{\texthamnosys{\char "E07D}}
+\DeclareTextCommand{\hamwristtothumb}{TU}{\texthamnosys{\char "E07E}}
+\DeclareTextCommand{\hamwristtopinky}{TU}{\texthamnosys{\char "E07F}}
+\DeclareTextCommand{\hammovecross}{TU}{\texthamnosys{\char "E0AD}}
+\DeclareTextCommand{\hammoveX}{TU}{\texthamnosys{\char "E0AE}}
+
+
+\def\@foreach#1#2{%
+  \@test@foreach{#1}#2,\@end@token%
+}
+\def\@swallow#1{}
+\def\@test@foreach#1{%
+  \@ifnextchar\@end@token%
+    {\@swallow}%
+    {\@recurse@foreach{#1}}%
+}
+\def\@recurse@foreach#1#2,#3\@end@token{%
+  #1{#2}%
+  \@test@foreach{#1}#3\@end@token%
+}
+
+\newcommand{\@wordtohamnosys}[1]{%
+\ifthenelse{\equal{#1}{hamfinger2}}{\hamfingertwo}{%
+\ifthenelse{\equal{#1}{hamfinger23}}{\hamfingertwothree}{%
+\ifthenelse{\equal{#1}{hamfinger23spread}}{\hamfingertwothreespread}{%
+\ifthenelse{\equal{#1}{hamfinger2345}}{\hamfingertwothreefourfive}{%
+\ifthenelse{\equal{#1}{hampinch12}}{\hampinchonetwo}{%
+\ifthenelse{\equal{#1}{hampinch12open}}{\hampinchonetwoopen}{%
+\ifthenelse{\equal{#1}{hamcee12}}{\hamceeonetwo}{%
+\ifthenelse{\equal{#1}{hamversion40}}{\hamversionfourzero}{%
+\@ifundefined{#1}{#1\PackageWarning{hamnosys}{%
+Unknown symbol "#1" in \protect\hamnosys. Typo?}}{\csname #1\endcsname}}}}}}}}}}
+
+\DeclareRobustCommand{\hamnosys}[1]{\@foreach{\@wordtohamnosys}{#1}}
+\endinput
+%%
+%% End of file `hamnosys.sty'.

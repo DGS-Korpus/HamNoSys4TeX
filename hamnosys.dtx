@@ -1,0 +1,2269 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2021 Universität Hamburg
+%
+% Created by Marc Schulder, Thomas Hanke
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Marc Schulder.
+%
+% This work consists of the files hamnosys.dtx, hamnosys.ins,
+% HamNoSysUnicode.ttf, README.md and the derived files
+% hamnosys.sty, hamnosys.pdf and hamnosys.bib.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{hamnosys.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<package>\ProvidesPackage{hamnosys}
+%<*package>
+    [2021/12/14 v1.0.0 Use HamNoSys in TeX]
+%</package>
+%
+%<*driver>
+\documentclass[british]{ltxdoc}
+\usepackage{hamnosys}[]
+
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{pdfusetitle,hyperindex=false,plainpages=false}{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%
+%%% Bibliography %%%
+%%%%%%%%%%%%%%%%%%%%
+\usepackage{filecontents}
+\begin{filecontents}{hamnosys.bib}
+@book{HamNoSysV1,
+  title = {HamNoSys. Hamburg Notation System for Sign Language. An Introduction},
+  author = {Prillwitz, Siegmund and Leven, Regina and Zienert, Heiko and Hanke, Thomas and Henning, Jan and others},
+  date = {1987},
+  publisher = {Zentrum für deutsche Gebärdensprache},
+  location = {Hamburg, Germany}
+}
+
+@book{HamNoSysV2,
+  title = {HamNoSys. Version 2.0. Hamburg Notation System for Sign Languages. An Introductory Guide},
+  author = {Prillwitz, Siegmund and Leven, Regina and Zienert, Heiko and Hanke, Thomas and Henning, Jan and others},
+  date = {1989},
+  publisher = {Signum},
+  location = {Hamburg, Germany},
+  isbn = {978-3-927731-01-1},
+  pagetotal = {46}
+}
+
+@incollection{Schmaling2001,
+  title = {Encoding manual aspects of sign language: HamNoSys 4.0},
+  booktitle = {ViSiCAST Deliverable D5-1: Interface Definitions},
+  author = {Schmaling, Constanze and Hanke, Thomas},
+  editor = {Hanke, Thomas},
+  date = {2001},
+  pages = {26--41},
+  url = {https://vhg.cmp.uea.ac.uk/tech/hamnosys/ViSiCASTD5-1.pdf}
+}
+
+@inproceedings{hanke:04001:sign-lang:lrec,
+  author    = {Hanke, Thomas},
+  title     = {{HamNoSys} -- Representing Sign Language Data in Language Resources and Language Processing Contexts},
+  pages     = {1--6},
+  editor    = {Streiter, Oliver and Vettori, Chiara},
+  booktitle = {Proceedings of the {LREC2004} Workshop on the Representation and Processing of Sign Languages: From {SignWriting} to Image Processing. Information techniques and their implications for teaching, documentation and communication},
+  maintitle = {4th International Conference on Language Resources and Evaluation ({LREC} 2004)},
+  publisher = {{European Language Resources Association (ELRA)}},
+  location  = {Paris, France},
+  venue     = {Lisbon, Portugal},
+  date      = {2004-05-30},
+  language  = {english},
+  url       = {https://www.sign-lang.uni-hamburg.de/lrec/pub/04001.pdf}
+}
+\end{filecontents}
+
+\PassOptionsToPackage{backend=biber, style=authoryear, date=year, origdate=year, uniquelist=false, mincitenames=1, maxcitenames=2, maxbibnames=50, minbibnames=50, natbib=true, language=autobib}{biblatex}
+\usepackage{biblatex}
+\addbibresource{hamnosys.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Load additional packages %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage[defaultlines=3,all]{nowidow}
+
+\usepackage{babel}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+
+\usepackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{ord=omit}
+
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev,capitalise]{cleveref}
+
+\hypersetup{
+    breaklinks=true, % Allow links to be broken across multiple lines
+    colorlinks = true, % Colours links instead of ugly boxes
+    urlcolor   = Maroon, % Colour for external hyperlinks
+    linkcolor  = RoyalBlue, % Colour of internal links
+    citecolor  = RoyalBlue, %Colour of citations
+}
+
+%%% Adjustments to code index %%%
+\setcounter{IndexColumns}{2}
+\makeindex
+
+% Turn macro/env usage and definitions in the index into hyperlinks.
+\renewcommand*{\usage}[1]{\textit{\hyperpage{#1}}}
+% To do: Figure out how to also turn code occurrences into hyperrefs. Package hypdoc can do it, but insists on listing
+% every single occurrence, instead of summarising repetitins as "n--m"
+
+%%% Adjustments to citations %%%
+% Make hyperlinks wrap around whole cite commands instead of just the year
+\DeclareCiteCommand{\parencite}[\mkbibparens]
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+    \printtext[bibhyperref]{\usebibmacro{cite}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand*{\parencite}[\mkbibparens]
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+    \printtext[bibhyperref]{\usebibmacro{citeyear}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\textcite}
+  {\boolfalse{cbx:parens}}
+  {\usebibmacro{citeindex}%
+   \printtext[bibhyperref]{\usebibmacro{textcite}}}
+  {\ifbool{cbx:parens}
+     {\bibcloseparen\global\boolfalse{cbx:parens}}
+     {}%
+   \multicitedelim}
+  {\usebibmacro{textcite:postnote}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Custom commands (feel free to adjust and extend) %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Semantic formatting (these are examples, change them to match your requirements)
+\newcommand{\packagename}[1]{\textit{#1}}
+\newcommand{\optionname}[1]{\textit{#1}}
+\newcommand{\filedirname}[1]{\texttt{#1}}
+
+\newcommand{\usemacro}[1]{\texttt{\bslash#1}\SpecialUsageIndex{#1}}
+
+% Special URLs
+\newcommand{\orcid}[2]{\href{https://orcid.org/#1}{#2}}  % Make a name a clickable link to an OrcID account (Example: \orcid{0000-0002-4183-8489}{Marc~Schulder})
+
+% Adjustments to listings output
+\lstset{language=[LaTeX]Tex,%C++,
+    % keywordstyle=\color{RoyalBlue},%\bfseries,
+    keywordstyle=\color{BlueViolet},%\bfseries,
+    basicstyle=\small\ttfamily,
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\rmfamily,
+    numbers=none,%left,%
+    numberstyle=\scriptsize,%\tiny
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ftff,
+    frame=single,
+    %frame=L
+    columns=fullflexible,
+    captionpos={b},
+    escapeinside={(*@}{@*)},
+    morekeywords={hamnosys,hamnosysfont,texthamnosys,hamfingertwo}
+}
+
+\newcommand{\lstoutput}[1]{\raggedright\emph{\textbf{\textit{Output:}} #1}}
+\newenvironment{hnstable}{\begin{longtable}{@{}llcr@{}} \toprule Name & Command & Symbol & Hex \\ \midrule \endhead \bottomrule \endfoot}{\end{longtable}}
+\newenvironment{hnsalttable}{\begin{longtable}{@{}llccr@{}} \toprule Name & Command & Symbol & Unicode & Hex \\ \midrule \endhead \bottomrule \endfoot}{\end{longtable}}
+
+%%% Abbreviations
+\newcommand{\ie}{i.\,e.\ }
+\newcommand{\Ie}{I.\,e.\ }
+\newcommand{\eg}{e.\,g.\ }
+\newcommand{\Eg}{E.\,g.\ }
+\newcommand{\cf}{cf.\ }
+\newcommand\etc{etc.\ }
+\newcommand\etcFinal{etc}
+
+%%% URls
+\newcommand{\pkggitURL}{\url{https://github.com/DGS-Korpus/HamNoSys4TeX}}
+\newcommand{\pkgversiondoiURL}{\url{https://doi.org/10.25592/uhhfdm.9644}}
+\newcommand{\pkgconceptdoiURL}{\url{https://doi.org/10.25592/uhhfdm.9643}}
+
+\newcommand{\hnssoftwareURL}{\url{https://doi.org/10.25592/uhhfdm.9724}}
+\newcommand{\webpalleteURL}{\url{https://www.sign-lang.uni-hamburg.de/hamnosys/input/}}
+\newcommand{\ilexURL}{\url{https://www.sign-lang.uni-hamburg.de/ilex/}}
+
+\newcommand{\licencelatexURL}{\url{https://www.latex-project.org/lppl.txt}}
+\newcommand{\licenceccbyHREF}{\href{https://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution 4.0 International}}
+\newcommand{\licenceccbysaHREF}{\href{https://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International}}
+
+
+\newcommand{\licenseOther}{The HamNoSysUnicode 4.0 TrueType font may also be obtained under a \licenceccbysaHREF{} licence as part of the \textit{HamNoSys software package} (see \cref{foot:hnssoftware}).}
+
+
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{hamnosys.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% % \changes{v1.0.0}{2021/12/14}{Initial version.}
+%
+%
+% \GetFileInfo{hamnosys.dtx}
+%
+% \DeleteShortVerb{\|}
+%
+% \DoNotIndex{\#,\$,\%,\&,\@,\\,\{,\},\^,\_,\~,\ }
+% \DoNotIndex{\DeclareTextCommand}
+% \DoNotIndex{\boolean,\else,\endcsname,\equal,\fi}
+% \DoNotIndex{\f@family,\f@series,\f@shape}
+%
+%
+% \title{The \textsf{hamnosys} package\thanks{This document
+%   corresponds to \textsf{hamnosys}~\fileversion, dated \filedate. An archival copy can be found at \pkgversiondoiURL{}.}}
+% \author{\orcid{0000-0002-4183-8489}{Marc Schulder} \texorpdfstring{\\\hamnosys{hamceeall,hamthumbopenmod,hamextfingerui,hampalml,hamhead,hamclose,hambehind,hamparbegin,hammovedi,hamreplace,hamfist,hamparend}}{} \and \orcid{0000-0001-7356-8973}{Thomas Hanke} \texorpdfstring{\\\hamnosys{hamcee12,hamthumbopenmod,hamextfingeril,hampalmr,hamneck,hamclose,hamparbegin,hammoveu,hamsmallmod,hamreplace,hamextfingerul,hampalmul,hamparend}}{}}
+% \date{\DTMdate{2021-12-14}}
+%
+%
+% \maketitle
+% \tableofcontents
+% \pagebreak
+
+% \section{Introduction}
+% \label{sec:intro}
+% The Hamburg Notation System, HamNoSys for short, is a system for the phonetic transcription of signed languages.
+% It was originally introduced in 1984 and the first public version followed in 1987 \parencite{HamNoSysV1,HamNoSysV2}.
+% The latest release of HamNoSys is version 4.1 \parencite{Schmaling2001}.
+% For a brief introduction into the structure of HamNoSys see \textcite{hanke:04001:sign-lang:lrec}.
+%
+% The TeX package \packagename{hamnosys} enables the use of HamNoSys symbols in TeX documents.
+% It provides three methods of entering HamNoSys symbols:
+% \begin{enumerate}
+%     \item direct input of symbols as Unicode characters in the TeX file, just like one would enter regular characters (see \cref{sec:directinput}).
+%     \item using TeX commands that have been defined for each individual symbol (see \cref{sec:cmdinput}),
+%     \item listing names of symbols inside the command \lstinline!\hamnosys! (see \cref{sec:nameinput}).
+% \end{enumerate}
+% %
+% This document describes the technical requirements (\cref{sec:conditions}), how to install the package (\cref{sec:installation}), how to use the TeX file (\cref{sec:usage}), the licence conditions of the package (\cref{sec:licence}), the three usage methods (\cref{sec:directinput,,sec:cmdinput,,sec:nameinput}), and provides an overview of all HamNoSys symbols (\cref{sec:hns}).
+%
+% \subsection{Requirements}
+% \label{sec:conditions}
+% This package requires the use of XeLaTeX or LuaLaTeX.
+% It unfortunately does not work with regular LaTeX (\ie the compilers \texttt{latex} and \texttt{pdfLatex}) as it needs to import an external unicode font.
+%
+% \subsection{Installation}
+% \label{sec:installation}
+% The source code of the \packagename{hamnosys} package can be found in a git repository on the Github account of the DGS-Korpus project.\footnote{\pkggitURL{}}
+% It is also archived via the research data repository of Universität Hamburg.\footnote{TeX package \packagename{hamnosys} (latest version): \pkgconceptdoiURL{}}
+%
+% As the \packagename{hamnosys} package is still in its test phase, it is not (yet) part of CTAN and is not listed in any TeX distribution.
+% Therefore it has to be integrated manually into each LaTeX project.
+% To do this you download the repository and copy the files
+% \filedirname{hamnosys.sty} and \filedirname{HamNoSysUnicode.ttf} into the main directory of your LaTeX project.
+%
+% To also be able to use HamNoSys elsewhere on your computer (see \cref{sec:editor}), it is recommended to install the font through your operating system as well.
+% It is available online as part of the HamNoSys software package.\footnote{\label{foot:hnssoftware}HamNoSys software package (latest version): \hnssoftwareURL{}}
+% In addition to the font file (Mac/Linux/Windows/Web), the archive also includes an application for writing HamNoSys via an input palette (Mac/Linux/\hspace{0pt}Windows) and a HamNoSys keyboard layout (Mac only).
+% The input palette is also available as a web interface\footnote{\webpalleteURL{}} and as part of the corpus software iLex\footnote{\ilexURL{}}.
+%
+% \subsection{Usage}
+% \label{sec:usage}
+% The package can be imported normally via \lstinline[deletekeywords={hamnosys}]!\usepackage{hamnosys}!.
+% It has a single optional parameter, \optionname{autofont}, which automates switching to the HamNoSys font when entering HamNoSys symbols as Unicode characters. (siehe \cref{sec:autofont}).
+%
+% HamNoSys is displayed through the special font \textit{HamNoSysUnicode}.
+% To input HamNoSys symbols as regular Unicode characters in your document, you need to switch to this font by using the command \lstinline!\texthamnosys{}! or the switch command \lstinline!\hamnosysfont! (see \cref{sec:font}).
+%
+% Alternatively you can enter HamNoSys symbols via invidual commands (\cref{sec:cmdinput}) or enter their names inside the command \lstinline!\hamnosys{}! (\cref{sec:nameinput}).
+% For an overview of all HamNoSys symbols, their names and the commands with which they can be generated, see \cref{sec:hns}.
+%
+%
+% \subsection{Licence}
+% \label{sec:licence}
+% Copyright \textcopyright{} 1986--2021 Universität Hamburg. Permission is granted to
+% copy, distribute and/or modify this software under the terms of the LaTeX Project
+% Public License, version 1.3c or later.\footnote{\licencelatexURL{}}
+%
+% \licenseOther{}
+%
+%
+% \section{HamNoSys using character input}
+% \label{sec:directinput}
+% HamNoSys symbols can be entered directly into a TeX document like any other character.
+% This allows you to copy-paste them from other programs or to enter them as direct input via HamNoSys keyboard layouts.
+%
+% HamNoSys is displayed via a special font.
+% You therefore need to either actively switch between regular fonts and the HamNoSys font (\cref{sec:font}) or activate the package option \optionname{autofont} (\cref{sec:autofont}).
+%
+% \subsection{Activating the HamNoSys font}
+% \label{sec:font}
+%
+% \DescribeMacro{\texthamnosys}
+% \DescribeMacro{\hamnosysfont}
+% To explicitly tell LaTeX that content should be displayed using the HamNoSys font, you can use the command \lstinline!\texthamnosys{}! or the switch command \lstinline!\hamnosysfont!.
+% These behave like \eg the italics commands \lstinline!\textit{}! and \lstinline!\itshape! do, respectively.
+% %
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}
+You can use \texthamnosys{(*@\texthamnosys{}@*)} to sign Hamburg.
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+% %
+% or
+% %
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}[title={\lstoutput{{You can use {\hamnosysfont } to sign Hamburg.}}}]
+You can use {\hamnosysfont (*@{\hamnosysfont }@*)} to sign Hamburg}.
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+%
+% \paragraph{Warning:} The HamNoSys font knows \textit{only} HamNoSys symbols, but no other characters.
+% Therefore you have to be careful to switch back to the regular font after using it.
+% The easiest way to do so is to always put HamNoSys symbols inside the \lstinline!\texthamnosys{}! command.
+% If you use \lstinline!\hamnosysfont!, it is best to limit its scope by using curly braces (see above).
+% The following example shows display issues that follow from not limiting the scope of the font:
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}[title={\lstoutput{{You can use \hamnosysfont  to sign Hamburg.}}}]
+You can use \hamnosysfont (*@\texthamnosys{}@*) to sign Hamburg.
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+%
+% \subsection{The package option \optionname{autofont}}
+% \label{sec:autofont}
+% An alternative to explicitly activating the HamNoSys font is the optional package parameter \optionname{autofont}\index{autofont|usage}, which activates automatic switching between regular and HamNoSys fonts.
+% This makes the use of \lstinline!\hamnosysfont! and \lstinline!\texthamnosys{}! unnecessary in many cases.
+% \optionname{autofont} is available in XeLaTeX, but not in LuaLaTeX.
+%
+% An important limitation is that \optionname{autofont} only recognises those characters as HamNoSys symbols that are not also used in regular texts.
+% It works for almost all HamNoSys symbols, except for those listed in \cref{sec:hns:regular}, which will be displayed using the regular document font unless you have activated the HamNoSys font explicitly.
+% The following example shows such a case.
+% Note that the curly braces and the vertical bar are displayed thinner in the regular font than in the HamNoSys font:
+%
+% \pagebreak[3]
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}[title={\lstoutput{Compare the braces and bar in \textnormal{\{\texthamnosys{}|\texthamnosys{}\}} with those in \texthamnosys{\{|\}}.}}]
+...
+\usepackage[autofont]{hamnosys}
+\begin{document}
+
+Compare the braces and bar in
+\{(*@\texthamnosys{}@*)|(*@\texthamnosys{}@*)\}
+with those in
+\texthamnosys{\{(*@\texthamnosys{}@*)|(*@\texthamnosys{}@*)\}}.
+
+\end{document}
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+%
+%
+% \noindent{}The technical reason for this behaviour is that \optionname{autofont} takes advantage of the fact that almost all characters of the HamNoSys font are located in \textit{Private Use Area} of Unicode.
+% This is a group of characters that the Unicode Consortium intentionally provides no meanings for, reserving them instead for use by special use cases that are not covered by Unicode, such as HamNoSys.
+% \optionname{autofont} uses the XeLaTeX package \textit{ucharclasses} to define commands that automatically switch fonts for all characters in the \textit{Private Use Area}.
+% However, there is a small number of characters relevant to HamNoSys that are located in the regular areas of Unicode, \eg the question mark and curly braces.
+% As these lie outside of the \textit{Private Use Area} \optionname{autofont} cannot detect that they are supposed to be part of HamNoSys.
+%
+% Another limitation is that \optionname{autofont} will always format all characters in the \textit{Private Use Area} with the HamNoSys font.
+% In the special case where you are using yet another font that also makes use of the \textit{Private Use Area} this could lead to conflicts.
+% In such cases you should not use \optionname{autofont} and instead change fonts explicitly or use one of the other methods.
+%
+%
+% \subsection{HamNoSys in the source document}
+% \label{sec:editor}
+% If you would like to also correctly display HamNoSys symbols in your TeX source code (instead of as many identical rectangles) you need to make sure that the font \textit{HamNoSysUnicode} is installed in your operating system (see \cref{sec:installation}).
+% Should it not be possible to install fonts (\eg in an online editor) or the editor you use still does not display the symbols, it might be preferable to use symbol commands or names instead (see \cref{sec:cmdinput,sec:nameinput}).
+% It should be noted, however, that it does not matter for the final PDF output file whether the source code was readable in the editor.
+% As long as the font was correctly activated (see \cref{sec:font}) all symbols should be displayed, even if they looked like identical rectangles in the input.
+%
+%
+% \section{HamNoSys using symbol commands}
+% \label{sec:cmdinput}
+%
+% The \packagename{hamnosys} package defines individual commands for each HamNoSys symbol.
+% This is an alternative ASCII-compatible input method for HamNoSys.
+% A list of all symbol commands can be found in \cref{sec:hns}.
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}[title={\lstoutput{You can use \hamceeall\hamthumbopenmod\hamfingerstraightmod\hamextfingerul\hampalmdl\hamforehead\hamlrat\hamclose\hamparbegin\hammover\hamreplace\hampinchall\hamfingerstraightmod\hamparend{} to sign Hamburg.}},morekeywords={hamceeall,hamthumbopenmod,hamfingerstraightmod,hamextfingerul,hampalmdl,hamforehead,hamlrat,hamclose,hamparbegin,hammover,hamreplace,hampinchall,hamfingerstraightmod,hamparend}]
+You can use \hamceeall\hamthumbopenmod\hamfingerstraightmod\hamextfingerul
+\hampalmdl\hamforehead\hamlrat\hamclose\hamparbegin\hammover\hamreplace
+\hampinchall\hamfingerstraightmod\hamparend{} to sign Hamburg.
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+%
+% \noindent{}As is usual for LaTeX you should make sure to close commands with \lstinline!{}! where necessary to prevent the accidental consumption of the following character.
+%
+% The names of the commands match the official names of the HamNoSys symbols as they are defined in the \textit{HamNoSysUnicode} font.
+% An exception are symbols whose names contain digits (see \cref{sec:hns:handshape,sec:hns:version}).
+% As digits are not allowed to be part of LaTeX commands, they are written out as English words instead.
+% For example, the symbol \hamfingertwo{} has the name \textit{hamfinger2} and the command \lstinline!\hamfingertwo!.
+%
+% An advantage of symbol commands is that they are always displayed in the correct font.
+% Explicitly switching fonts with the help of \lstinline!\hamnosysfont! or \lstinline!\texthamnosys{}! is not required.
+%
+%
+% \section{HamNoSys using symbol names}
+% \label{sec:nameinput}
+%
+% \DescribeMacro{\hamnosys}
+% The command \lstinline!\hamnosys{}! allows you to input HamNoSys as a comma-separated sequence of symbol names.
+% The symbol names can be taken from the lists in \cref{sec:hns} or copied from the web input palette (see \cref{sec:installation}).
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}[title={\lstoutput{You can use \hamnosys{hamceeall,hamthumbopenmod,hamfingerstraightmod,hamextfingerul,hampalmdl,hamforehead,hamlrat,hamclose,hamparbegin,hammover,hamreplace,hampinchall,hamfingerstraightmod,hamparend} to sign Hamburg.}}]
+You can use \hamnosys{hamceeall,hamthumbopenmod,hamfingerstraightmod,hamextfingerul,hampalmdl,hamforehead,hamlrat,hamclose,hamparbegin,hammover,hamreplace,hampinchall,hamfingerstraightmod,hamparend} to sign Hamburg.
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+%
+% \noindent{}Unlike the symbol commands of \cref{sec:cmdinput}), symbol names in \lstinline!\hamnosys{}! may contain digits.
+% In fact, both the name version with digits and the one with written out number words are accepted.
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}
+\hamnosys{hamfinger2}
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+% or
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}[title={\lstoutput{\hamnosys{hamfinger2}}},deletekeywords={hamfingertwo}]
+\hamnosys{hamfingertwo}
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+%
+% \noindent{}Symbol names must be separated by commas.
+% Whitespaces are allowed after the comma, but not required.
+% %
+% If a sequence contains an unknown term you will receive a compiler warning and the unknown term will be output as regular text.
+% Unknown terms may be caused by typos, terms that are not part of the HamNoSys symbol name vocabulary, errors in comma separation or that a whitespace was entered \textbf{before} a comma.
+% In the following example the symbol \textit{hampalmdl} was accidentally spelled \textit{hanpalmdl}:
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}[title={\lstoutput{\hamnosys{hamceeall,hamthumbopenmod,hamfingerstraightmod,hamextfingerul}hanpalmdl\hamnosys{hamforehead,hamlrat,hamclose,hamparbegin,hammover,hamreplace,hampinchall,hamfingerstraightmod,hamparend}}}]
+\hamnosys{hamceeall,hamthumbopenmod,hamfingerstraightmod,hamextfingerul,hanpalmdl,hamforehead,hamlrat,hamclose,hamparbegin,hammover,hamreplace,hampinchall,hamfingerstraightmod,hamparend}
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+%
+%
+% \newpage
+% \section{List of HamNoSys symbols}
+% \label{sec:hns}
+% The following tables provide an overview of all HamNoSys symbols.
+% For each symbol they provide its name, which command produces it, the symbol itself, and the hexadecimal value that is used to represent it in Unicode.
+% Modifiers are symbols that function as diacritics, combining with the preceding character.
+%
+
+% \subsection{Handshapes}
+% \label{sec:hns:handshape}
+% \begin{hnstable}
+% hamfist & \usemacro{hamfist} & \hamfist & \texttt{E000} \\
+% hamflathand & \usemacro{hamflathand} & \hamflathand & \texttt{E001} \\
+% hamfinger2 & \usemacro{hamfingertwo} & \hamfingertwo & \texttt{E002} \\
+% hamfinger23 & \usemacro{hamfingertwothree} & \hamfingertwothree & \texttt{E003} \\
+% hamfinger23spread & \usemacro{hamfingertwothreespread} & \hamfingertwothreespread & \texttt{E004} \\
+% hamfinger2345 & \usemacro{hamfingertwothreefourfive} & \hamfingertwothreefourfive & \texttt{E005} \\
+% hampinch12 & \usemacro{hampinchonetwo} & \hampinchonetwo & \texttt{E006} \\
+% hampinchall & \usemacro{hampinchall} & \hampinchall & \texttt{E007} \\
+% hampinch12open & \usemacro{hampinchonetwoopen} & \hampinchonetwoopen & \texttt{E008} \\
+% hamcee12 & \usemacro{hamceeonetwo} & \hamceeonetwo & \texttt{E009} \\
+% hamceeall & \usemacro{hamceeall} & \hamceeall & \texttt{E00A} \\
+% hamceeopen & \usemacro{hamceeopen} & \hamceeopen & \texttt{E00B} \\
+% \end{hnstable}
+%
+% \subsection{Handshape modifiers}
+% \label{sec:hns:handshapemod}
+% \begin{hnstable}
+% hamthumboutmod & \usemacro{hamthumboutmod} & \hamthumboutmod & \texttt{E00C} \\
+% hamthumbacrossmod & \usemacro{hamthumbacrossmod} & \hamthumbacrossmod & \texttt{E00D} \\
+% hamthumbopenmod & \usemacro{hamthumbopenmod} & \hamthumbopenmod & \texttt{E00E} \\
+% hamfingerstraightmod & \usemacro{hamfingerstraightmod} & \hamfingerstraightmod & \texttt{E010} \\
+% hamfingerbendmod & \usemacro{hamfingerbendmod} & \hamfingerbendmod & \texttt{E011} \\
+% hamfingerhookmod & \usemacro{hamfingerhookmod} & \hamfingerhookmod & \texttt{E012} \\
+% hamdoublebent & \usemacro{hamdoublebent} & \hamdoublebent & \texttt{E013} \\
+% hamdoublehooked & \usemacro{hamdoublehooked} & \hamdoublehooked & \texttt{E014} \\
+% \end{hnstable}
+%
+% \subsection{Extended finger directions}
+% \label{sec:hns:fingerdir}
+% \begin{hnstable}
+% hamextfingeru & \usemacro{hamextfingeru} & \hamextfingeru & \texttt{E020} \\
+% hamextfingerur & \usemacro{hamextfingerur} & \hamextfingerur & \texttt{E021} \\
+% hamextfingerr & \usemacro{hamextfingerr} & \hamextfingerr & \texttt{E022} \\
+% hamextfingerdr & \usemacro{hamextfingerdr} & \hamextfingerdr & \texttt{E023} \\
+% hamextfingerd & \usemacro{hamextfingerd} & \hamextfingerd & \texttt{E024} \\
+% hamextfingerdl & \usemacro{hamextfingerdl} & \hamextfingerdl & \texttt{E025} \\
+% hamextfingerl & \usemacro{hamextfingerl} & \hamextfingerl & \texttt{E026} \\
+% hamextfingerul & \usemacro{hamextfingerul} & \hamextfingerul & \texttt{E027} \\
+% hamextfingerol & \usemacro{hamextfingerol} & \hamextfingerol & \texttt{E028} \\
+% hamextfingero & \usemacro{hamextfingero} & \hamextfingero & \texttt{E029} \\
+% hamextfingeror & \usemacro{hamextfingeror} & \hamextfingeror & \texttt{E02A} \\
+% hamextfingeril & \usemacro{hamextfingeril} & \hamextfingeril & \texttt{E02B} \\
+% hamextfingeri & \usemacro{hamextfingeri} & \hamextfingeri & \texttt{E02C} \\
+% hamextfingerir & \usemacro{hamextfingerir} & \hamextfingerir & \texttt{E02D} \\
+% hamextfingerui & \usemacro{hamextfingerui} & \hamextfingerui & \texttt{E02E} \\
+% hamextfingerdi & \usemacro{hamextfingerdi} & \hamextfingerdi & \texttt{E02F} \\
+% hamextfingerdo & \usemacro{hamextfingerdo} & \hamextfingerdo & \texttt{E030} \\
+% hamextfingeruo & \usemacro{hamextfingeruo} & \hamextfingeruo & \texttt{E031} \\
+% \end{hnstable}
+%
+% \subsection{Palm orientation}
+% \label{sec:hns:palm}
+% \begin{hnstable}
+% hampalmu & \usemacro{hampalmu} & \hampalmu & \texttt{E038} \\
+% hampalmur & \usemacro{hampalmur} & \hampalmur & \texttt{E039} \\
+% hampalmr & \usemacro{hampalmr} & \hampalmr & \texttt{E03A} \\
+% hampalmdr & \usemacro{hampalmdr} & \hampalmdr & \texttt{E03B} \\
+% hampalmd & \usemacro{hampalmd} & \hampalmd & \texttt{E03C} \\
+% hampalmdl & \usemacro{hampalmdl} & \hampalmdl & \texttt{E03D} \\
+% hampalml & \usemacro{hampalml} & \hampalml & \texttt{E03E} \\
+% hampalmul & \usemacro{hampalmul} & \hampalmul & \texttt{E03F} \\
+% \end{hnstable}
+%
+% \subsection{Location}
+% \label{sec:hns:location}
+% \begin{hnstable}
+% hamhead & \usemacro{hamhead} & \hamhead & \texttt{E040} \\
+% hamheadtop & \usemacro{hamheadtop} & \hamheadtop & \texttt{E041} \\
+% hamforehead & \usemacro{hamforehead} & \hamforehead & \texttt{E042} \\
+% hameyebrows & \usemacro{hameyebrows} & \hameyebrows & \texttt{E043} \\
+% hameyes & \usemacro{hameyes} & \hameyes & \texttt{E044} \\
+% hamnose & \usemacro{hamnose} & \hamnose & \texttt{E045} \\
+% hamnostrils & \usemacro{hamnostrils} & \hamnostrils & \texttt{E046} \\
+% hamear & \usemacro{hamear} & \hamear & \texttt{E047} \\
+% hamearlobe & \usemacro{hamearlobe} & \hamearlobe & \texttt{E048} \\
+% hamcheek & \usemacro{hamcheek} & \hamcheek & \texttt{E049} \\
+% hamlips & \usemacro{hamlips} & \hamlips & \texttt{E04A} \\
+% hamtongue & \usemacro{hamtongue} & \hamtongue & \texttt{E04B} \\
+% hamteeth & \usemacro{hamteeth} & \hamteeth & \texttt{E04C} \\
+% hamchin & \usemacro{hamchin} & \hamchin & \texttt{E04D} \\
+% hamunderchin & \usemacro{hamunderchin} & \hamunderchin & \texttt{E04E} \\
+% hamneck & \usemacro{hamneck} & \hamneck & \texttt{E04F} \\
+% hamshouldertop & \usemacro{hamshouldertop} & \hamshouldertop & \texttt{E050} \\
+% hamshoulders & \usemacro{hamshoulders} & \hamshoulders & \texttt{E051} \\
+% hamchest & \usemacro{hamchest} & \hamchest & \texttt{E052} \\
+% hamstomach & \usemacro{hamstomach} & \hamstomach & \texttt{E053} \\
+% hambelowstomach & \usemacro{hambelowstomach} & \hambelowstomach & \texttt{E054} \\
+% hamneutralspace & \usemacro{hamneutralspace} & \hamneutralspace & \texttt{E05F} \\
+% hamupperarm & \usemacro{hamupperarm} & \hamupperarm & \texttt{E060} \\
+% hamelbow & \usemacro{hamelbow} & \hamelbow & \texttt{E061} \\
+% hamelbowinside & \usemacro{hamelbowinside} & \hamelbowinside & \texttt{E062} \\
+% hamlowerarm & \usemacro{hamlowerarm} & \hamlowerarm & \texttt{E063} \\
+% hamwristback & \usemacro{hamwristback} & \hamwristback & \texttt{E064} \\
+% hamwristpulse & \usemacro{hamwristpulse} & \hamwristpulse & \texttt{E065} \\
+% hamthumbball & \usemacro{hamthumbball} & \hamthumbball & \texttt{E066} \\
+% hampalm & \usemacro{hampalm} & \hampalm & \texttt{E067} \\
+% hamhandback & \usemacro{hamhandback} & \hamhandback & \texttt{E068} \\
+% hamthumbside & \usemacro{hamthumbside} & \hamthumbside & \texttt{E069} \\
+% hampinkyside & \usemacro{hampinkyside} & \hampinkyside & \texttt{E06A} \\
+% hamthumb & \usemacro{hamthumb} & \hamthumb & \texttt{E070} \\
+% hamindexfinger & \usemacro{hamindexfinger} & \hamindexfinger & \texttt{E071} \\
+% hammiddlefinger & \usemacro{hammiddlefinger} & \hammiddlefinger & \texttt{E072} \\
+% hamringfinger & \usemacro{hamringfinger} & \hamringfinger & \texttt{E073} \\
+% hampinky & \usemacro{hampinky} & \hampinky & \texttt{E074} \\
+% hamfingertip & \usemacro{hamfingertip} & \hamfingertip & \texttt{E075} \\
+% hamfingernail & \usemacro{hamfingernail} & \hamfingernail & \texttt{E076} \\
+% hamfingerpad & \usemacro{hamfingerpad} & \hamfingerpad & \texttt{E077} \\
+% hamfingermidjoint & \usemacro{hamfingermidjoint} & \hamfingermidjoint & \texttt{E078} \\
+% hamfingerbase & \usemacro{hamfingerbase} & \hamfingerbase & \texttt{E079} \\
+% hamfingerside & \usemacro{hamfingerside} & \hamfingerside & \texttt{E07A} \\
+% \end{hnstable}
+%
+% \pagebreak
+% \subsection{Location modifiers}
+% \label{sec:hns:locationmod}
+% \begin{hnstable}
+% hamlrbeside & \usemacro{hamlrbeside} & \hamlrbeside & \texttt{E058} \\
+% hamlrat & \usemacro{hamlrat} & \hamlrat & \texttt{E059} \\
+% hamcoreftag & \usemacro{hamcoreftag} & \hamcoreftag & \texttt{E05A} \\
+% hamcorefref & \usemacro{hamcorefref} & \hamcorefref & \texttt{E05B} \\
+% \end{hnstable}
+%
+% \subsection{Movement}
+% \label{sec:hns:movement}
+% \begin{hnstable}
+% hammoveu & \usemacro{hammoveu} & \hammoveu & \texttt{E080} \\
+% hammoveur & \usemacro{hammoveur} & \hammoveur & \texttt{E081} \\
+% hammover & \usemacro{hammover} & \hammover & \texttt{E082} \\
+% hammovedr & \usemacro{hammovedr} & \hammovedr & \texttt{E083} \\
+% hammoved & \usemacro{hammoved} & \hammoved & \texttt{E084} \\
+% hammovedl & \usemacro{hammovedl} & \hammovedl & \texttt{E085} \\
+% hammovel & \usemacro{hammovel} & \hammovel & \texttt{E086} \\
+% hammoveul & \usemacro{hammoveul} & \hammoveul & \texttt{E087} \\
+% hammoveol & \usemacro{hammoveol} & \hammoveol & \texttt{E088} \\
+% hammoveo & \usemacro{hammoveo} & \hammoveo & \texttt{E089} \\
+% hammoveor & \usemacro{hammoveor} & \hammoveor & \texttt{E08A} \\
+% hammoveil & \usemacro{hammoveil} & \hammoveil & \texttt{E08B} \\
+% hammovei & \usemacro{hammovei} & \hammovei & \texttt{E08C} \\
+% hammoveir & \usemacro{hammoveir} & \hammoveir & \texttt{E08D} \\
+% hammoveui & \usemacro{hammoveui} & \hammoveui & \texttt{E08E} \\
+% hammovedi & \usemacro{hammovedi} & \hammovedi & \texttt{E08F} \\
+% hammovedo & \usemacro{hammovedo} & \hammovedo & \texttt{E090} \\
+% hammoveuo & \usemacro{hammoveuo} & \hammoveuo & \texttt{E091} \\
+% hamcircleo & \usemacro{hamcircleo} & \hamcircleo & \texttt{E092} \\
+% hamcirclei & \usemacro{hamcirclei} & \hamcirclei & \texttt{E093} \\
+% hamcircled & \usemacro{hamcircled} & \hamcircled & \texttt{E094} \\
+% hamcircleu & \usemacro{hamcircleu} & \hamcircleu & \texttt{E095} \\
+% hamcirclel & \usemacro{hamcirclel} & \hamcirclel & \texttt{E096} \\
+% hamcircler & \usemacro{hamcircler} & \hamcircler & \texttt{E097} \\
+% hamcircleul & \usemacro{hamcircleul} & \hamcircleul & \texttt{E098} \\
+% hamcircledr & \usemacro{hamcircledr} & \hamcircledr & \texttt{E099} \\
+% hamcircleur & \usemacro{hamcircleur} & \hamcircleur & \texttt{E09A} \\
+% hamcircledl & \usemacro{hamcircledl} & \hamcircledl & \texttt{E09B} \\
+% hamcircleol & \usemacro{hamcircleol} & \hamcircleol & \texttt{E09C} \\
+% hamcircleir & \usemacro{hamcircleir} & \hamcircleir & \texttt{E09D} \\
+% hamcircleor & \usemacro{hamcircleor} & \hamcircleor & \texttt{E09E} \\
+% hamcircleil & \usemacro{hamcircleil} & \hamcircleil & \texttt{E09F} \\
+% hamcircleui & \usemacro{hamcircleui} & \hamcircleui & \texttt{E0A0} \\
+% hamcircledo & \usemacro{hamcircledo} & \hamcircledo & \texttt{E0A1} \\
+% hamcircleuo & \usemacro{hamcircleuo} & \hamcircleuo & \texttt{E0A2} \\
+% hamcircledi & \usemacro{hamcircledi} & \hamcircledi & \texttt{E0A3} \\
+% hamfingerplay & \usemacro{hamfingerplay} & \hamfingerplay & \texttt{E0A4} \\
+% hamnodding & \usemacro{hamnodding} & \hamnodding & \texttt{E0A5} \\
+% hamswinging & \usemacro{hamswinging} & \hamswinging & \texttt{E0A6} \\
+% hamtwisting & \usemacro{hamtwisting} & \hamtwisting & \texttt{E0A7} \\
+% hamstircw & \usemacro{hamstircw} & \hamstircw & \texttt{E0A8} \\
+% hamstirccw & \usemacro{hamstirccw} & \hamstirccw & \texttt{E0A9} \\
+% hamreplace & \usemacro{hamreplace} & \hamreplace & \texttt{E0AA} \\
+% hamnomotion & \usemacro{hamnomotion} & \hamnomotion & \texttt{E0AF} \\
+% hamclocku & \usemacro{hamclocku} & \hamclocku & \texttt{E0B0} \\
+% hamclockul & \usemacro{hamclockul} & \hamclockul & \texttt{E0B1} \\
+% hamclockl & \usemacro{hamclockl} & \hamclockl & \texttt{E0B2} \\
+% hamclockdl & \usemacro{hamclockdl} & \hamclockdl & \texttt{E0B3} \\
+% hamclockd & \usemacro{hamclockd} & \hamclockd & \texttt{E0B4} \\
+% hamclockdr & \usemacro{hamclockdr} & \hamclockdr & \texttt{E0B5} \\
+% hamclockr & \usemacro{hamclockr} & \hamclockr & \texttt{E0B6} \\
+% hamclockur & \usemacro{hamclockur} & \hamclockur & \texttt{E0B7} \\
+% hamclockfull & \usemacro{hamclockfull} & \hamclockfull & \texttt{E0B8} \\
+% hamarcl & \usemacro{hamarcl} & \hamarcl & \texttt{E0B9} \\
+% hamarcu & \usemacro{hamarcu} & \hamarcu & \texttt{E0BA} \\
+% hamarcr & \usemacro{hamarcr} & \hamarcr & \texttt{E0BB} \\
+% hamarcd & \usemacro{hamarcd} & \hamarcd & \texttt{E0BC} \\
+% hamwavy & \usemacro{hamwavy} & \hamwavy & \texttt{E0BD} \\
+% hamzigzag & \usemacro{hamzigzag} & \hamzigzag & \texttt{E0BE} \\
+% hamellipseh & \usemacro{hamellipseh} & \hamellipseh & \texttt{E0C0} \\
+% hamellipseur & \usemacro{hamellipseur} & \hamellipseur & \texttt{E0C1} \\
+% hamellipsev & \usemacro{hamellipsev} & \hamellipsev & \texttt{E0C2} \\
+% hamellipseul & \usemacro{hamellipseul} & \hamellipseul & \texttt{E0C3} \\
+% hamincreasing & \usemacro{hamincreasing} & \hamincreasing & \texttt{E0C4} \\
+% hamdecreasing & \usemacro{hamdecreasing} & \hamdecreasing & \texttt{E0C5} \\
+% hamfast & \usemacro{hamfast} & \hamfast & \texttt{E0C8} \\
+% hamslow & \usemacro{hamslow} & \hamslow & \texttt{E0C9} \\
+% hamtense & \usemacro{hamtense} & \hamtense & \texttt{E0CA} \\
+% hamrest & \usemacro{hamrest} & \hamrest & \texttt{E0CB} \\
+% hamhalt & \usemacro{hamhalt} & \hamhalt & \texttt{E0CC} \\
+% hamclose & \usemacro{hamclose} & \hamclose & \texttt{E0D0} \\
+% hamtouch & \usemacro{hamtouch} & \hamtouch & \texttt{E0D1} \\
+% haminterlock & \usemacro{haminterlock} & \haminterlock & \texttt{E0D2} \\
+% hamcross & \usemacro{hamcross} & \hamcross & \texttt{E0D3} \\
+% hamarmextended & \usemacro{hamarmextended} & \hamarmextended & \texttt{E0D4} \\
+% hambehind & \usemacro{hambehind} & \hambehind & \texttt{E0D5} \\
+% hambrushing & \usemacro{hambrushing} & \hambrushing & \texttt{E0D6} \\
+% \end{hnstable}
+%
+% \subsection{Movement modifiers}
+% \label{sec:hns:movementmod}
+% \begin{hnstable}
+% hamsmallmod & \usemacro{hamsmallmod} & \hamsmallmod & \texttt{E0C6} \\
+% hamlargemod & \usemacro{hamlargemod} & \hamlargemod & \texttt{E0C7} \\
+% \end{hnstable}
+%
+% \subsection{Other symbols}
+% \label{sec:hns:other}
+% \begin{hnstable}
+% hamrepeatfromstart & \usemacro{hamrepeatfromstart} & \hamrepeatfromstart & \texttt{E0D8} \\
+% hamrepeatfromstartseveral & \usemacro{hamrepeatfromstartseveral} & \hamrepeatfromstartseveral & \texttt{E0D9} \\
+% hamrepeatcontinue & \usemacro{hamrepeatcontinue} & \hamrepeatcontinue & \texttt{E0DA} \\
+% hamrepeatcontinueseveral & \usemacro{hamrepeatcontinueseveral} & \hamrepeatcontinueseveral & \texttt{E0DB} \\
+% hamrepeatreverse & \usemacro{hamrepeatreverse} & \hamrepeatreverse & \texttt{E0DC} \\
+% hamalternatingmotion & \usemacro{hamalternatingmotion} & \hamalternatingmotion & \texttt{E0DD} \\
+% hamseqbegin & \usemacro{hamseqbegin} & \hamseqbegin & \texttt{E0E0} \\
+% hamseqend & \usemacro{hamseqend} & \hamseqend & \texttt{E0E1} \\
+% hamparbegin & \usemacro{hamparbegin} & \hamparbegin & \texttt{E0E2} \\
+% hamparend & \usemacro{hamparend} & \hamparend & \texttt{E0E3} \\
+% hamfusionbegin & \usemacro{hamfusionbegin} & \hamfusionbegin & \texttt{E0E4} \\
+% hamfusionend & \usemacro{hamfusionend} & \hamfusionend & \texttt{E0E5} \\
+% hambetween & \usemacro{hambetween} & \hambetween & \texttt{E0E6} \\
+% hamplus & \usemacro{hamplus} & \hamplus & \texttt{E0E7} \\
+% hamsymmpar & \usemacro{hamsymmpar} & \hamsymmpar & \texttt{E0E8} \\
+% hamsymmlr & \usemacro{hamsymmlr} & \hamsymmlr & \texttt{E0E9} \\
+% hamnondominant & \usemacro{hamnondominant} & \hamnondominant & \texttt{E0EA} \\
+% hamnonipsi & \usemacro{hamnonipsi} & \hamnonipsi & \texttt{E0EB} \\
+% hametc & \usemacro{hametc} & \hametc & \texttt{E0EC} \\
+% hamorirelative & \usemacro{hamorirelative} & \hamorirelative & \texttt{E0ED} \\
+% hammime & \usemacro{hammime} & \hammime & \texttt{E0F0} \\
+% \end{hnstable}
+%
+% \pagebreak
+% \subsection{Version symbol}
+% \label{sec:hns:version}
+% \begin{hnstable}
+% hamversion40 & \usemacro{hamversionfourzero} & \hamversionfourzero & \texttt{E0F1} \\
+% \end{hnstable}
+%
+% \subsection{Regular Unicode characters}
+% \label{sec:hns:regular}
+% The following characters are not correctly recognised as HamNoSys symbols by \textit{autofont} (see \cref{sec:autofont}).
+% If the HamNoSys font is not explicitly activated, these characters will instead be displayed using the regular document font.
+% To compare these two possible output forms, they are contrasted in the columns \textit{Symbol} (HamNoSys) and \textit{Unicode} (normal).
+% \begin{hnsalttable}
+% hamspace & \usemacro{hamspace} & \hamspace &   & \texttt{20} \\
+% hamexclaim & \usemacro{hamexclaim} & \hamexclaim & ! & \texttt{21} \\
+% hamcomma & \usemacro{hamcomma} & \hamcomma & ,  & \texttt{002C} \\
+% hamfullstop & \usemacro{hamfullstop} & \hamfullstop & . & \texttt{002E} \\
+% hamquery & \usemacro{hamquery} & \hamquery & ? & \texttt{003F} \\
+% hamaltbegin & \usemacro{hamaltbegin} & \hamaltbegin & \{ & \texttt{007B} \\
+% hammetaalt & \usemacro{hammetaalt} & \hammetaalt & | & \texttt{007C} \\
+% hamaltend & \usemacro{hamaltend} & \hamaltend & \} & \texttt{007D} \\
+% \end{hnsalttable}
+%
+% \subsection{Obsolete spacing symbols}
+% \label{sec:hns:obsolete}
+% The following symbols are marked as obsolete, but can still be found in the HamNoSys font.
+% \begin{hnstable}
+% hamwristtopulse & \usemacro{hamwristtopulse} & \hamwristtopulse & \texttt{E07C} \\
+% hamwristtoback & \usemacro{hamwristtoback} & \hamwristtoback & \texttt{E07D} \\
+% hamwristtothumb & \usemacro{hamwristtothumb} & \hamwristtothumb & \texttt{E07E} \\
+% hamwristtopinky & \usemacro{hamwristtopinky} & \hamwristtopinky & \texttt{E07F} \\
+% hammovecross & \usemacro{hammovecross} & \hammovecross & \texttt{E0AD} \\
+% hammoveX & \usemacro{hammoveX} & \hammoveX & \texttt{E0AE} \\
+% \end{hnstable}
+%
+%
+
+%
+% \StopEventually{}
+%
+% \pagebreak
+% \section{Implementation}
+% \label{sec:code}
+% \subsection{Initialisation and Dependencies}
+% \label{sec:code:init}
+% Make sure the user uses Xe- oder LuaTeX.
+%    \begin{macrocode}
+\RequirePackage{iftex}
+\ifXeTeX
+\else
+ \ifLuaTeX
+ \else
+   \PackageError{hamnosys}{XeTeX or LuaTeX required}{The hamnosys package
+    requires either LuaTeX or XeTeX. You must change your typesetting engine
+    to, e.g., "xelatex" or "lualatex"instead of "latex" or "pdflatex".}
+ \fi
+\fi
+%    \end{macrocode}
+% Additional package dependencies.
+%    \begin{macrocode}
+\RequirePackage{fontspec}
+\RequirePackage{ifthen}
+\RequirePackage{kvoptions}
+%    \end{macrocode}
+% Specify the \textit{autofont} package option (see \cref{sec:autofont}).
+%    \begin{macrocode}
+\SetupKeyvalOptions{family=hns, prefix=hns@}
+
+\DeclareBoolOption{autofont}
+
+\ProcessKeyvalOptions{hns}
+%    \end{macrocode}
+% \subsection{HamNoSys font setup}
+% \label{sec:code:font}
+% \begin{macro}{\hamnosysfont}
+% Load the HamNoSys Unicode font family.
+% This also declares the \lstinline!\hamnosysfont! command for switching to the font (see \cref{sec:font}).
+%    \begin{macrocode}
+\newfontfamily\hamnosysfont{HamNoSysUnicode}[
+    Path=./,
+    UprightFont=HamNoSysUnicode.ttf,
+    ]
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\texthamnosys}
+% Declare font command \lstinline!\texthamnosys! (see \cref{sec:font}).
+%    \begin{macrocode}
+\newcommand{\texthamnosys}[1]{{\hamnosysfont #1}}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \subsection{Automatic font switching}
+% \label{sec:code:autofont}
+% Implement the \textit{autofont} package option (see \cref{sec:autofont}).
+% Use of this option adds the package \textit{ucharclasses} as a depedency, which is only available for XeTeX.
+%    \begin{macrocode}
+\ifthenelse{\boolean{hns@autofont}}{%
+  \ifXeTeX
+%    \end{macrocode}
+% Only import \textit{ucharclasses} if option is active to avoid unnecessary errors in LuaTeX.
+%    \begin{macrocode}
+  \RequirePackage[Latin, PrivateUseArea]{ucharclasses}
+
+%    \end{macrocode}
+% Make it so that any characters in the \textit{Private Use Area} of Unicode switch to the HamNoSys font
+% and then back to the font setting they were at before.
+% As any \textit{Private Use Area} character will always do this, this is incompatible with using a second font
+% that provides characters in the same Unicode area.
+%    \begin{macrocode}
+  \setTransitionsFor{PrivateUseArea}%
+    {\let\curfamily\f@family\let\curshape\f@shape\let\curseries\f@series\hamnosysfont}
+    {\fontfamily{\curfamily}\fontshape{\curshape}\fontseries{\curseries}\selectfont}
+%    \end{macrocode}
+% If user is not using XeTeX, throw a warning.
+%    \begin{macrocode}
+  \else
+    \PackageWarning{hamnosys}{Option autofont only available in XeTeX.}
+\fi}{}
+%    \end{macrocode}
+
+% \subsection{HamNoSys symbol commands}
+% \label{sec:code:cmdinput}
+% Declare commands for individiual HamNoSys symbols.
+% See \cref{sec:cmdinput} for a general discussion of how these are used
+% and \cref{sec:hns} for a tabular representation of all symbols.
+% \subsubsection{ Handshapes }
+% \label{sec:code:hns:handshape}
+% \begin{macro}{\hamfist}
+% Declare the symbol \hamfist{} (hamfist)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfist}{TU}{\texthamnosys{\char "E000}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamflathand}
+% Declare the symbol \hamflathand{} (hamflathand)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamflathand}{TU}{\texthamnosys{\char "E001}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingertwo}
+% Declare the symbol \hamfingertwo{} (hamfinger2)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingertwo}{TU}{\texthamnosys{\char "E002}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingertwothree}
+% Declare the symbol \hamfingertwothree{} (hamfinger23)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingertwothree}{TU}{\texthamnosys{\char "E003}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingertwothreespread}
+% Declare the symbol \hamfingertwothreespread{} (hamfinger23spread)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingertwothreespread}{TU}{\texthamnosys{\char "E004}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingertwothreefourfive}
+% Declare the symbol \hamfingertwothreefourfive{} (hamfinger2345)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingertwothreefourfive}{TU}{\texthamnosys{\char "E005}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampinchonetwo}
+% Declare the symbol \hampinchonetwo{} (hampinch12)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampinchonetwo}{TU}{\texthamnosys{\char "E006}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampinchall}
+% Declare the symbol \hampinchall{} (hampinchall)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampinchall}{TU}{\texthamnosys{\char "E007}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampinchonetwoopen}
+% Declare the symbol \hampinchonetwoopen{} (hampinch12open)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampinchonetwoopen}{TU}{\texthamnosys{\char "E008}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamceeonetwo}
+% Declare the symbol \hamceeonetwo{} (hamcee12)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamceeonetwo}{TU}{\texthamnosys{\char "E009}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamceeall}
+% Declare the symbol \hamceeall{} (hamceeall)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamceeall}{TU}{\texthamnosys{\char "E00A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamceeopen}
+% Declare the symbol \hamceeopen{} (hamceeopen)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamceeopen}{TU}{\texthamnosys{\char "E00B}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Handshape modifiers }
+% \label{sec:code:hns:handshapemod}
+% \begin{macro}{\hamthumboutmod}
+% Declare the symbol \hspace{0.5em}\hamthumboutmod{} (hamthumboutmod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamthumboutmod}{TU}{\texthamnosys{\char "E00C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamthumbacrossmod}
+% Declare the symbol \hspace{0.5em}\hamthumbacrossmod{} (hamthumbacrossmod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamthumbacrossmod}{TU}{\texthamnosys{\char "E00D}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamthumbopenmod}
+% Declare the symbol \hspace{0.5em}\hamthumbopenmod{} (hamthumbopenmod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamthumbopenmod}{TU}{\texthamnosys{\char "E00E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingerstraightmod}
+% Declare the symbol \hspace{0.5em}\hamfingerstraightmod{} (hamfingerstraightmod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingerstraightmod}{TU}{\texthamnosys{\char "E010}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingerbendmod}
+% Declare the symbol \hspace{0.5em}\hamfingerbendmod{} (hamfingerbendmod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingerbendmod}{TU}{\texthamnosys{\char "E011}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingerhookmod}
+% Declare the symbol \hspace{0.5em}\hamfingerhookmod{} (hamfingerhookmod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingerhookmod}{TU}{\texthamnosys{\char "E012}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamdoublebent}
+% Declare the symbol \hspace{0.5em}\hamdoublebent{} (hamdoublebent)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamdoublebent}{TU}{\texthamnosys{\char "E013}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamdoublehooked}
+% Declare the symbol \hspace{0.5em}\hamdoublehooked{} (hamdoublehooked)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamdoublehooked}{TU}{\texthamnosys{\char "E014}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Extended finger directions }
+% \label{sec:code:hns:fingerdir}
+% \begin{macro}{\hamextfingeru}
+% Declare the symbol \hamextfingeru{} (hamextfingeru)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingeru}{TU}{\texthamnosys{\char "E020}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerur}
+% Declare the symbol \hamextfingerur{} (hamextfingerur)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerur}{TU}{\texthamnosys{\char "E021}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerr}
+% Declare the symbol \hamextfingerr{} (hamextfingerr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerr}{TU}{\texthamnosys{\char "E022}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerdr}
+% Declare the symbol \hamextfingerdr{} (hamextfingerdr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerdr}{TU}{\texthamnosys{\char "E023}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerd}
+% Declare the symbol \hamextfingerd{} (hamextfingerd)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerd}{TU}{\texthamnosys{\char "E024}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerdl}
+% Declare the symbol \hamextfingerdl{} (hamextfingerdl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerdl}{TU}{\texthamnosys{\char "E025}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerl}
+% Declare the symbol \hamextfingerl{} (hamextfingerl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerl}{TU}{\texthamnosys{\char "E026}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerul}
+% Declare the symbol \hamextfingerul{} (hamextfingerul)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerul}{TU}{\texthamnosys{\char "E027}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerol}
+% Declare the symbol \hamextfingerol{} (hamextfingerol)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerol}{TU}{\texthamnosys{\char "E028}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingero}
+% Declare the symbol \hamextfingero{} (hamextfingero)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingero}{TU}{\texthamnosys{\char "E029}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingeror}
+% Declare the symbol \hamextfingeror{} (hamextfingeror)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingeror}{TU}{\texthamnosys{\char "E02A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingeril}
+% Declare the symbol \hamextfingeril{} (hamextfingeril)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingeril}{TU}{\texthamnosys{\char "E02B}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingeri}
+% Declare the symbol \hamextfingeri{} (hamextfingeri)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingeri}{TU}{\texthamnosys{\char "E02C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerir}
+% Declare the symbol \hamextfingerir{} (hamextfingerir)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerir}{TU}{\texthamnosys{\char "E02D}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerui}
+% Declare the symbol \hamextfingerui{} (hamextfingerui)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerui}{TU}{\texthamnosys{\char "E02E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerdi}
+% Declare the symbol \hamextfingerdi{} (hamextfingerdi)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerdi}{TU}{\texthamnosys{\char "E02F}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingerdo}
+% Declare the symbol \hamextfingerdo{} (hamextfingerdo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingerdo}{TU}{\texthamnosys{\char "E030}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamextfingeruo}
+% Declare the symbol \hamextfingeruo{} (hamextfingeruo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamextfingeruo}{TU}{\texthamnosys{\char "E031}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Palm orientation }
+% \label{sec:code:hns:palm}
+% \begin{macro}{\hampalmu}
+% Declare the symbol \hampalmu{} (hampalmu)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalmu}{TU}{\texthamnosys{\char "E038}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalmur}
+% Declare the symbol \hampalmur{} (hampalmur)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalmur}{TU}{\texthamnosys{\char "E039}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalmr}
+% Declare the symbol \hampalmr{} (hampalmr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalmr}{TU}{\texthamnosys{\char "E03A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalmdr}
+% Declare the symbol \hampalmdr{} (hampalmdr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalmdr}{TU}{\texthamnosys{\char "E03B}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalmd}
+% Declare the symbol \hampalmd{} (hampalmd)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalmd}{TU}{\texthamnosys{\char "E03C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalmdl}
+% Declare the symbol \hampalmdl{} (hampalmdl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalmdl}{TU}{\texthamnosys{\char "E03D}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalml}
+% Declare the symbol \hampalml{} (hampalml)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalml}{TU}{\texthamnosys{\char "E03E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalmul}
+% Declare the symbol \hampalmul{} (hampalmul)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalmul}{TU}{\texthamnosys{\char "E03F}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Location }
+% \label{sec:code:hns:location}
+% \begin{macro}{\hamhead}
+% Declare the symbol \hamhead{} (hamhead)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamhead}{TU}{\texthamnosys{\char "E040}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamheadtop}
+% Declare the symbol \hamheadtop{} (hamheadtop)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamheadtop}{TU}{\texthamnosys{\char "E041}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamforehead}
+% Declare the symbol \hamforehead{} (hamforehead)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamforehead}{TU}{\texthamnosys{\char "E042}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hameyebrows}
+% Declare the symbol \hameyebrows{} (hameyebrows)
+%    \begin{macrocode}
+\DeclareTextCommand{\hameyebrows}{TU}{\texthamnosys{\char "E043}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hameyes}
+% Declare the symbol \hameyes{} (hameyes)
+%    \begin{macrocode}
+\DeclareTextCommand{\hameyes}{TU}{\texthamnosys{\char "E044}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamnose}
+% Declare the symbol \hamnose{} (hamnose)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamnose}{TU}{\texthamnosys{\char "E045}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamnostrils}
+% Declare the symbol \hamnostrils{} (hamnostrils)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamnostrils}{TU}{\texthamnosys{\char "E046}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamear}
+% Declare the symbol \hamear{} (hamear)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamear}{TU}{\texthamnosys{\char "E047}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamearlobe}
+% Declare the symbol \hamearlobe{} (hamearlobe)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamearlobe}{TU}{\texthamnosys{\char "E048}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcheek}
+% Declare the symbol \hamcheek{} (hamcheek)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcheek}{TU}{\texthamnosys{\char "E049}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamlips}
+% Declare the symbol \hamlips{} (hamlips)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamlips}{TU}{\texthamnosys{\char "E04A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamtongue}
+% Declare the symbol \hamtongue{} (hamtongue)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamtongue}{TU}{\texthamnosys{\char "E04B}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamteeth}
+% Declare the symbol \hamteeth{} (hamteeth)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamteeth}{TU}{\texthamnosys{\char "E04C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamchin}
+% Declare the symbol \hamchin{} (hamchin)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamchin}{TU}{\texthamnosys{\char "E04D}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamunderchin}
+% Declare the symbol \hamunderchin{} (hamunderchin)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamunderchin}{TU}{\texthamnosys{\char "E04E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamneck}
+% Declare the symbol \hamneck{} (hamneck)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamneck}{TU}{\texthamnosys{\char "E04F}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamshouldertop}
+% Declare the symbol \hamshouldertop{} (hamshouldertop)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamshouldertop}{TU}{\texthamnosys{\char "E050}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamshoulders}
+% Declare the symbol \hamshoulders{} (hamshoulders)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamshoulders}{TU}{\texthamnosys{\char "E051}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamchest}
+% Declare the symbol \hamchest{} (hamchest)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamchest}{TU}{\texthamnosys{\char "E052}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamstomach}
+% Declare the symbol \hamstomach{} (hamstomach)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamstomach}{TU}{\texthamnosys{\char "E053}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hambelowstomach}
+% Declare the symbol \hambelowstomach{} (hambelowstomach)
+%    \begin{macrocode}
+\DeclareTextCommand{\hambelowstomach}{TU}{\texthamnosys{\char "E054}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamneutralspace}
+% Declare the symbol \hamneutralspace{} (hamneutralspace)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamneutralspace}{TU}{\texthamnosys{\char "E05F}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamupperarm}
+% Declare the symbol \hamupperarm{} (hamupperarm)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamupperarm}{TU}{\texthamnosys{\char "E060}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamelbow}
+% Declare the symbol \hamelbow{} (hamelbow)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamelbow}{TU}{\texthamnosys{\char "E061}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamelbowinside}
+% Declare the symbol \hamelbowinside{} (hamelbowinside)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamelbowinside}{TU}{\texthamnosys{\char "E062}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamlowerarm}
+% Declare the symbol \hamlowerarm{} (hamlowerarm)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamlowerarm}{TU}{\texthamnosys{\char "E063}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamwristback}
+% Declare the symbol \hamwristback{} (hamwristback)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamwristback}{TU}{\texthamnosys{\char "E064}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamwristpulse}
+% Declare the symbol \hamwristpulse{} (hamwristpulse)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamwristpulse}{TU}{\texthamnosys{\char "E065}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamthumbball}
+% Declare the symbol \hamthumbball{} (hamthumbball)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamthumbball}{TU}{\texthamnosys{\char "E066}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampalm}
+% Declare the symbol \hampalm{} (hampalm)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampalm}{TU}{\texthamnosys{\char "E067}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamhandback}
+% Declare the symbol \hamhandback{} (hamhandback)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamhandback}{TU}{\texthamnosys{\char "E068}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamthumbside}
+% Declare the symbol \hamthumbside{} (hamthumbside)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamthumbside}{TU}{\texthamnosys{\char "E069}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampinkyside}
+% Declare the symbol \hampinkyside{} (hampinkyside)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampinkyside}{TU}{\texthamnosys{\char "E06A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamthumb}
+% Declare the symbol \hamthumb{} (hamthumb)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamthumb}{TU}{\texthamnosys{\char "E070}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamindexfinger}
+% Declare the symbol \hamindexfinger{} (hamindexfinger)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamindexfinger}{TU}{\texthamnosys{\char "E071}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammiddlefinger}
+% Declare the symbol \hammiddlefinger{} (hammiddlefinger)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammiddlefinger}{TU}{\texthamnosys{\char "E072}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamringfinger}
+% Declare the symbol \hamringfinger{} (hamringfinger)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamringfinger}{TU}{\texthamnosys{\char "E073}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hampinky}
+% Declare the symbol \hampinky{} (hampinky)
+%    \begin{macrocode}
+\DeclareTextCommand{\hampinky}{TU}{\texthamnosys{\char "E074}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingertip}
+% Declare the symbol \hamfingertip{} (hamfingertip)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingertip}{TU}{\texthamnosys{\char "E075}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingernail}
+% Declare the symbol \hamfingernail{} (hamfingernail)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingernail}{TU}{\texthamnosys{\char "E076}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingerpad}
+% Declare the symbol \hamfingerpad{} (hamfingerpad)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingerpad}{TU}{\texthamnosys{\char "E077}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingermidjoint}
+% Declare the symbol \hamfingermidjoint{} (hamfingermidjoint)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingermidjoint}{TU}{\texthamnosys{\char "E078}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingerbase}
+% Declare the symbol \hamfingerbase{} (hamfingerbase)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingerbase}{TU}{\texthamnosys{\char "E079}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingerside}
+% Declare the symbol \hamfingerside{} (hamfingerside)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingerside}{TU}{\texthamnosys{\char "E07A}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Location modifiers }
+% \label{sec:code:hns:locationmod}
+% \begin{macro}{\hamlrbeside}
+% Declare the symbol \hamlrbeside{} (hamlrbeside)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamlrbeside}{TU}{\texthamnosys{\char "E058}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamlrat}
+% Declare the symbol \hamlrat{} (hamlrat)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamlrat}{TU}{\texthamnosys{\char "E059}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcoreftag}
+% Declare the symbol \hspace{0.5em}\hamcoreftag{} (hamcoreftag)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcoreftag}{TU}{\texthamnosys{\char "E05A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcorefref}
+% Declare the symbol \hspace{0.5em}\hamcorefref{} (hamcorefref)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcorefref}{TU}{\texthamnosys{\char "E05B}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Movement }
+% \label{sec:code:hns:movement}
+% \begin{macro}{\hammoveu}
+% Declare the symbol \hammoveu{} (hammoveu)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveu}{TU}{\texthamnosys{\char "E080}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveur}
+% Declare the symbol \hammoveur{} (hammoveur)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveur}{TU}{\texthamnosys{\char "E081}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammover}
+% Declare the symbol \hammover{} (hammover)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammover}{TU}{\texthamnosys{\char "E082}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammovedr}
+% Declare the symbol \hammovedr{} (hammovedr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammovedr}{TU}{\texthamnosys{\char "E083}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoved}
+% Declare the symbol \hammoved{} (hammoved)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoved}{TU}{\texthamnosys{\char "E084}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammovedl}
+% Declare the symbol \hammovedl{} (hammovedl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammovedl}{TU}{\texthamnosys{\char "E085}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammovel}
+% Declare the symbol \hammovel{} (hammovel)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammovel}{TU}{\texthamnosys{\char "E086}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveul}
+% Declare the symbol \hammoveul{} (hammoveul)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveul}{TU}{\texthamnosys{\char "E087}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveol}
+% Declare the symbol \hammoveol{} (hammoveol)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveol}{TU}{\texthamnosys{\char "E088}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveo}
+% Declare the symbol \hammoveo{} (hammoveo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveo}{TU}{\texthamnosys{\char "E089}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveor}
+% Declare the symbol \hammoveor{} (hammoveor)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveor}{TU}{\texthamnosys{\char "E08A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveil}
+% Declare the symbol \hammoveil{} (hammoveil)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveil}{TU}{\texthamnosys{\char "E08B}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammovei}
+% Declare the symbol \hammovei{} (hammovei)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammovei}{TU}{\texthamnosys{\char "E08C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveir}
+% Declare the symbol \hammoveir{} (hammoveir)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveir}{TU}{\texthamnosys{\char "E08D}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveui}
+% Declare the symbol \hammoveui{} (hammoveui)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveui}{TU}{\texthamnosys{\char "E08E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammovedi}
+% Declare the symbol \hammovedi{} (hammovedi)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammovedi}{TU}{\texthamnosys{\char "E08F}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammovedo}
+% Declare the symbol \hammovedo{} (hammovedo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammovedo}{TU}{\texthamnosys{\char "E090}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveuo}
+% Declare the symbol \hammoveuo{} (hammoveuo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveuo}{TU}{\texthamnosys{\char "E091}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleo}
+% Declare the symbol \hamcircleo{} (hamcircleo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleo}{TU}{\texthamnosys{\char "E092}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcirclei}
+% Declare the symbol \hamcirclei{} (hamcirclei)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcirclei}{TU}{\texthamnosys{\char "E093}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircled}
+% Declare the symbol \hamcircled{} (hamcircled)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircled}{TU}{\texthamnosys{\char "E094}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleu}
+% Declare the symbol \hamcircleu{} (hamcircleu)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleu}{TU}{\texthamnosys{\char "E095}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcirclel}
+% Declare the symbol \hamcirclel{} (hamcirclel)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcirclel}{TU}{\texthamnosys{\char "E096}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircler}
+% Declare the symbol \hamcircler{} (hamcircler)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircler}{TU}{\texthamnosys{\char "E097}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleul}
+% Declare the symbol \hamcircleul{} (hamcircleul)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleul}{TU}{\texthamnosys{\char "E098}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircledr}
+% Declare the symbol \hamcircledr{} (hamcircledr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircledr}{TU}{\texthamnosys{\char "E099}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleur}
+% Declare the symbol \hamcircleur{} (hamcircleur)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleur}{TU}{\texthamnosys{\char "E09A}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircledl}
+% Declare the symbol \hamcircledl{} (hamcircledl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircledl}{TU}{\texthamnosys{\char "E09B}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleol}
+% Declare the symbol \hamcircleol{} (hamcircleol)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleol}{TU}{\texthamnosys{\char "E09C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleir}
+% Declare the symbol \hamcircleir{} (hamcircleir)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleir}{TU}{\texthamnosys{\char "E09D}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleor}
+% Declare the symbol \hamcircleor{} (hamcircleor)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleor}{TU}{\texthamnosys{\char "E09E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleil}
+% Declare the symbol \hamcircleil{} (hamcircleil)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleil}{TU}{\texthamnosys{\char "E09F}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleui}
+% Declare the symbol \hamcircleui{} (hamcircleui)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleui}{TU}{\texthamnosys{\char "E0A0}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircledo}
+% Declare the symbol \hamcircledo{} (hamcircledo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircledo}{TU}{\texthamnosys{\char "E0A1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircleuo}
+% Declare the symbol \hamcircleuo{} (hamcircleuo)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircleuo}{TU}{\texthamnosys{\char "E0A2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcircledi}
+% Declare the symbol \hamcircledi{} (hamcircledi)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcircledi}{TU}{\texthamnosys{\char "E0A3}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfingerplay}
+% Declare the symbol \hamfingerplay{} (hamfingerplay)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfingerplay}{TU}{\texthamnosys{\char "E0A4}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamnodding}
+% Declare the symbol \hamnodding{} (hamnodding)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamnodding}{TU}{\texthamnosys{\char "E0A5}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamswinging}
+% Declare the symbol \hamswinging{} (hamswinging)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamswinging}{TU}{\texthamnosys{\char "E0A6}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamtwisting}
+% Declare the symbol \hamtwisting{} (hamtwisting)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamtwisting}{TU}{\texthamnosys{\char "E0A7}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamstircw}
+% Declare the symbol \hamstircw{} (hamstircw)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamstircw}{TU}{\texthamnosys{\char "E0A8}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamstirccw}
+% Declare the symbol \hamstirccw{} (hamstirccw)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamstirccw}{TU}{\texthamnosys{\char "E0A9}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamreplace}
+% Declare the symbol \hamreplace{} (hamreplace)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamreplace}{TU}{\texthamnosys{\char "E0AA}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamnomotion}
+% Declare the symbol \hamnomotion{} (hamnomotion)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamnomotion}{TU}{\texthamnosys{\char "E0AF}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclocku}
+% Declare the symbol \hamclocku{} (hamclocku)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclocku}{TU}{\texthamnosys{\char "E0B0}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockul}
+% Declare the symbol \hamclockul{} (hamclockul)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockul}{TU}{\texthamnosys{\char "E0B1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockl}
+% Declare the symbol \hamclockl{} (hamclockl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockl}{TU}{\texthamnosys{\char "E0B2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockdl}
+% Declare the symbol \hamclockdl{} (hamclockdl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockdl}{TU}{\texthamnosys{\char "E0B3}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockd}
+% Declare the symbol \hamclockd{} (hamclockd)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockd}{TU}{\texthamnosys{\char "E0B4}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockdr}
+% Declare the symbol \hamclockdr{} (hamclockdr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockdr}{TU}{\texthamnosys{\char "E0B5}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockr}
+% Declare the symbol \hamclockr{} (hamclockr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockr}{TU}{\texthamnosys{\char "E0B6}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockur}
+% Declare the symbol \hamclockur{} (hamclockur)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockur}{TU}{\texthamnosys{\char "E0B7}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclockfull}
+% Declare the symbol \hamclockfull{} (hamclockfull)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclockfull}{TU}{\texthamnosys{\char "E0B8}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamarcl}
+% Declare the symbol \hamarcl{} (hamarcl)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamarcl}{TU}{\texthamnosys{\char "E0B9}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamarcu}
+% Declare the symbol \hamarcu{} (hamarcu)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamarcu}{TU}{\texthamnosys{\char "E0BA}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamarcr}
+% Declare the symbol \hamarcr{} (hamarcr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamarcr}{TU}{\texthamnosys{\char "E0BB}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamarcd}
+% Declare the symbol \hamarcd{} (hamarcd)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamarcd}{TU}{\texthamnosys{\char "E0BC}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamwavy}
+% Declare the symbol \hamwavy{} (hamwavy)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamwavy}{TU}{\texthamnosys{\char "E0BD}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamzigzag}
+% Declare the symbol \hamzigzag{} (hamzigzag)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamzigzag}{TU}{\texthamnosys{\char "E0BE}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamellipseh}
+% Declare the symbol \hamellipseh{} (hamellipseh)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamellipseh}{TU}{\texthamnosys{\char "E0C0}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamellipseur}
+% Declare the symbol \hamellipseur{} (hamellipseur)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamellipseur}{TU}{\texthamnosys{\char "E0C1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamellipsev}
+% Declare the symbol \hamellipsev{} (hamellipsev)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamellipsev}{TU}{\texthamnosys{\char "E0C2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamellipseul}
+% Declare the symbol \hamellipseul{} (hamellipseul)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamellipseul}{TU}{\texthamnosys{\char "E0C3}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamincreasing}
+% Declare the symbol \hamincreasing{} (hamincreasing)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamincreasing}{TU}{\texthamnosys{\char "E0C4}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamdecreasing}
+% Declare the symbol \hamdecreasing{} (hamdecreasing)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamdecreasing}{TU}{\texthamnosys{\char "E0C5}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfast}
+% Declare the symbol \hamfast{} (hamfast)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfast}{TU}{\texthamnosys{\char "E0C8}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamslow}
+% Declare the symbol \hamslow{} (hamslow)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamslow}{TU}{\texthamnosys{\char "E0C9}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamtense}
+% Declare the symbol \hamtense{} (hamtense)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamtense}{TU}{\texthamnosys{\char "E0CA}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamrest}
+% Declare the symbol \hamrest{} (hamrest)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamrest}{TU}{\texthamnosys{\char "E0CB}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamhalt}
+% Declare the symbol \hamhalt{} (hamhalt)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamhalt}{TU}{\texthamnosys{\char "E0CC}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamclose}
+% Declare the symbol \hamclose{} (hamclose)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamclose}{TU}{\texthamnosys{\char "E0D0}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamtouch}
+% Declare the symbol \hamtouch{} (hamtouch)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamtouch}{TU}{\texthamnosys{\char "E0D1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\haminterlock}
+% Declare the symbol \haminterlock{} (haminterlock)
+%    \begin{macrocode}
+\DeclareTextCommand{\haminterlock}{TU}{\texthamnosys{\char "E0D2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcross}
+% Declare the symbol \hamcross{} (hamcross)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcross}{TU}{\texthamnosys{\char "E0D3}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamarmextended}
+% Declare the symbol \hamarmextended{} (hamarmextended)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamarmextended}{TU}{\texthamnosys{\char "E0D4}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hambehind}
+% Declare the symbol \hambehind{} (hambehind)
+%    \begin{macrocode}
+\DeclareTextCommand{\hambehind}{TU}{\texthamnosys{\char "E0D5}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hambrushing}
+% Declare the symbol \hambrushing{} (hambrushing)
+%    \begin{macrocode}
+\DeclareTextCommand{\hambrushing}{TU}{\texthamnosys{\char "E0D6}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Movement modifiers }
+% \label{sec:code:hns:movementmod}
+% \begin{macro}{\hamsmallmod}
+% Declare the symbol \hspace{0.5em}\hamsmallmod{} (hamsmallmod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamsmallmod}{TU}{\texthamnosys{\char "E0C6}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamlargemod}
+% Declare the symbol \hspace{0.5em}\hamlargemod{} (hamlargemod)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamlargemod}{TU}{\texthamnosys{\char "E0C7}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Other symbols }
+% \label{sec:code:hns:other}
+% \begin{macro}{\hamrepeatfromstart}
+% Declare the symbol \hamrepeatfromstart{} (hamrepeatfromstart)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamrepeatfromstart}{TU}{\texthamnosys{\char "E0D8}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamrepeatfromstartseveral}
+% Declare the symbol \hamrepeatfromstartseveral{} (hamrepeatfromstartseveral)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamrepeatfromstartseveral}{TU}{\texthamnosys{\char "E0D9}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamrepeatcontinue}
+% Declare the symbol \hamrepeatcontinue{} (hamrepeatcontinue)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamrepeatcontinue}{TU}{\texthamnosys{\char "E0DA}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamrepeatcontinueseveral}
+% Declare the symbol \hamrepeatcontinueseveral{} (hamrepeatcontinueseveral)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamrepeatcontinueseveral}{TU}{\texthamnosys{\char "E0DB}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamrepeatreverse}
+% Declare the symbol \hamrepeatreverse{} (hamrepeatreverse)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamrepeatreverse}{TU}{\texthamnosys{\char "E0DC}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamalternatingmotion}
+% Declare the symbol \hamalternatingmotion{} (hamalternatingmotion)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamalternatingmotion}{TU}{\texthamnosys{\char "E0DD}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamseqbegin}
+% Declare the symbol \hamseqbegin{} (hamseqbegin)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamseqbegin}{TU}{\texthamnosys{\char "E0E0}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamseqend}
+% Declare the symbol \hamseqend{} (hamseqend)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamseqend}{TU}{\texthamnosys{\char "E0E1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamparbegin}
+% Declare the symbol \hamparbegin{} (hamparbegin)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamparbegin}{TU}{\texthamnosys{\char "E0E2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamparend}
+% Declare the symbol \hamparend{} (hamparend)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamparend}{TU}{\texthamnosys{\char "E0E3}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfusionbegin}
+% Declare the symbol \hamfusionbegin{} (hamfusionbegin)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfusionbegin}{TU}{\texthamnosys{\char "E0E4}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfusionend}
+% Declare the symbol \hamfusionend{} (hamfusionend)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfusionend}{TU}{\texthamnosys{\char "E0E5}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hambetween}
+% Declare the symbol \hambetween{} (hambetween)
+%    \begin{macrocode}
+\DeclareTextCommand{\hambetween}{TU}{\texthamnosys{\char "E0E6}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamplus}
+% Declare the symbol \hamplus{} (hamplus)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamplus}{TU}{\texthamnosys{\char "E0E7}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamsymmpar}
+% Declare the symbol \hamsymmpar{} (hamsymmpar)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamsymmpar}{TU}{\texthamnosys{\char "E0E8}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamsymmlr}
+% Declare the symbol \hamsymmlr{} (hamsymmlr)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamsymmlr}{TU}{\texthamnosys{\char "E0E9}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamnondominant}
+% Declare the symbol \hamnondominant{} (hamnondominant)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamnondominant}{TU}{\texthamnosys{\char "E0EA}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamnonipsi}
+% Declare the symbol \hamnonipsi{} (hamnonipsi)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamnonipsi}{TU}{\texthamnosys{\char "E0EB}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hametc}
+% Declare the symbol \hspace{0.5em}\hametc{} (hametc)
+%    \begin{macrocode}
+\DeclareTextCommand{\hametc}{TU}{\texthamnosys{\char "E0EC}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamorirelative}
+% Declare the symbol \hspace{0.5em}\hamorirelative{} (hamorirelative)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamorirelative}{TU}{\texthamnosys{\char "E0ED}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammime}
+% Declare the symbol \hammime{} (hammime)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammime}{TU}{\texthamnosys{\char "E0F0}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Version symbol }
+% \label{sec:code:hns:version}
+% \begin{macro}{\hamversionfourzero}
+% Declare the symbol \hamversionfourzero{} (hamversion40)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamversionfourzero}{TU}{\texthamnosys{\char "E0F1}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Regular Unicode characters }
+% \label{sec:code:hns:regular}
+% \begin{macro}{\hamspace}
+% Declare the symbol \hamspace{} (hamspace)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamspace}{TU}{\texthamnosys{\char "20}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamexclaim}
+% Declare the symbol \hamexclaim{} (hamexclaim)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamexclaim}{TU}{\texthamnosys{\char "21}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamcomma}
+% Declare the symbol \hamcomma{} (hamcomma)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamcomma}{TU}{\texthamnosys{\char "002C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamfullstop}
+% Declare the symbol \hamfullstop{} (hamfullstop)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamfullstop}{TU}{\texthamnosys{\char "002E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamquery}
+% Declare the symbol \hamquery{} (hamquery)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamquery}{TU}{\texthamnosys{\char "003F}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamaltbegin}
+% Declare the symbol \hamaltbegin{} (hamaltbegin)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamaltbegin}{TU}{\texthamnosys{\char "007B}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammetaalt}
+% Declare the symbol \hammetaalt{} (hammetaalt)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammetaalt}{TU}{\texthamnosys{\char "007C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamaltend}
+% Declare the symbol \hamaltend{} (hamaltend)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamaltend}{TU}{\texthamnosys{\char "007D}}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{ Obsolete spacing symbols }
+% \label{sec:code:hns:obsolete}
+% \begin{macro}{\hamwristtopulse}
+% Declare the symbol \hamwristtopulse{} (hamwristtopulse)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamwristtopulse}{TU}{\texthamnosys{\char "E07C}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamwristtoback}
+% Declare the symbol \hamwristtoback{} (hamwristtoback)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamwristtoback}{TU}{\texthamnosys{\char "E07D}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamwristtothumb}
+% Declare the symbol \hamwristtothumb{} (hamwristtothumb)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamwristtothumb}{TU}{\texthamnosys{\char "E07E}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hamwristtopinky}
+% Declare the symbol \hamwristtopinky{} (hamwristtopinky)
+%    \begin{macrocode}
+\DeclareTextCommand{\hamwristtopinky}{TU}{\texthamnosys{\char "E07F}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammovecross}
+% Declare the symbol \hammovecross{} (hammovecross)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammovecross}{TU}{\texthamnosys{\char "E0AD}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\hammoveX}
+% Declare the symbol \hammoveX{} (hammoveX)
+%    \begin{macrocode}
+\DeclareTextCommand{\hammoveX}{TU}{\texthamnosys{\char "E0AE}}
+%    \end{macrocode}
+% \end{macro}
+
+%
+
+% \subsection{Symbol name sequence}
+% \label{sec:code:nameinput}
+% Code required for entering HamNoSys as a sequence of symbol name as described in \cref{sec:nameinput}.
+%
+% \subsubsection{For each}
+% \label{sec:code:loop}
+% Declare an internal \textit{for loop} macro that can iterate over a comma-separated list and perform a given command
+% on each item of the list.\footnote{
+% Code adapted from \url{https://stackoverflow.com/a/2408268}.}
+% \begin{macro}{\@foreach}
+% The \textit{for each} loop.
+% Takes two arguments:
+% \begin{enumerate}
+%   \item Command that is called on each item of the list.
+%   \item Comma-separated list of items.
+% \end{enumerate}
+%    \begin{macrocode}
+\def\@foreach#1#2{%
+  \@test@foreach{#1}#2,\@end@token%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@swallow}
+% Internal helper function that eats one input at a time.
+%    \begin{macrocode}
+\def\@swallow#1{}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@test@foreach}
+% Internal helper function that checks the next character after \#1
+% and continues the loop iteration unless \lstinline!\@end@token! is found.
+%    \begin{macrocode}
+\def\@test@foreach#1{%
+  \@ifnextchar\@end@token%
+    {\@swallow}%
+    {\@recurse@foreach{#1}}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@recurse@foreach}
+% Internal helper function that splits the sequence at the next comma thanks to the patter matching of \lstinline!\def!.
+%    \begin{macrocode}
+\def\@recurse@foreach#1#2,#3\@end@token{%
+  #1{#2}%
+  \@test@foreach{#1}#3\@end@token%
+}
+%    \end{macrocode}
+% \end{macro}
+
+% \subsubsection{Symbol name to symbol command}
+% \label{sec:code:wordtohamnosys}
+% \begin{macro}{\@wordtohamnosys}
+% Internal command for converting a single HamNoSys symbol name to its TeX-command (and thus into the actual character).
+% Most symbol names are passed straight through to the command of the same name, but symbols whose name contains digits
+% are intercepted and manually replaced with their matching symbol command.
+%    \begin{macrocode}
+\newcommand{\@wordtohamnosys}[1]{%
+\ifthenelse{\equal{#1}{hamfinger2}}{\hamfingertwo}{%
+\ifthenelse{\equal{#1}{hamfinger23}}{\hamfingertwothree}{%
+\ifthenelse{\equal{#1}{hamfinger23spread}}{\hamfingertwothreespread}{%
+\ifthenelse{\equal{#1}{hamfinger2345}}{\hamfingertwothreefourfive}{%
+\ifthenelse{\equal{#1}{hampinch12}}{\hampinchonetwo}{%
+\ifthenelse{\equal{#1}{hampinch12open}}{\hampinchonetwoopen}{%
+\ifthenelse{\equal{#1}{hamcee12}}{\hamceeonetwo}{%
+\ifthenelse{\equal{#1}{hamversion40}}{\hamversionfourzero}{%
+\@ifundefined{#1}{#1\PackageWarning{hamnosys}{%
+Unknown symbol "#1" in \protect\hamnosys. Typo?}}{\csname #1\endcsname}}}}}}}}}}
+%    \end{macrocode}
+% \end{macro}
+
+% \subsubsection{Symbol name sequence command}
+% \label{sec:code:nameinput:cmd}
+% \begin{macro}{\hamnosys}
+% Declare the user command for generating a HamNoSys symbol name sequence (see \cref{sec:nameinput}).
+%    \begin{macrocode}
+\DeclareRobustCommand{\hamnosys}[1]{\@foreach{\@wordtohamnosys}{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \printbibliography[heading=bibintoc]
+%
+% \pagebreak
+% \phantomsection%
+% \addcontentsline{toc}{section}{Index}%
+% \PrintIndex
+%
+% \pagebreak
+% \phantomsection%
+% \addcontentsline{toc}{section}{Change History}%
+% \PrintChanges
+%
+% \Finale
+\endinput
