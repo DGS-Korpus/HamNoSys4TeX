@@ -29,7 +29,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<package>\ProvidesPackage{hamnosys}
 %<*package>
-    [2021/12/14 v1.0.0 Use HamNoSys in TeX]
+    [2022/01/20 v1.0.1 Use HamNoSys in TeX]
 %</package>
 %
 %<*driver>
@@ -204,7 +204,7 @@
 
 %%% URls
 \newcommand{\pkggitURL}{\url{https://github.com/DGS-Korpus/HamNoSys4TeX}}
-\newcommand{\pkgversiondoiURL}{\url{https://doi.org/10.25592/uhhfdm.9644}}
+\newcommand{\pkgversiondoiURL}{\url{https://doi.org/10.25592/uhhfdm.9834}}
 \newcommand{\pkgconceptdoiURL}{\url{https://doi.org/10.25592/uhhfdm.9643}}
 
 \newcommand{\hnssoftwareURL}{\url{https://doi.org/10.25592/uhhfdm.9724}}
@@ -263,7 +263,7 @@
 % \title{The \textsf{hamnosys} package\thanks{This document
 %   corresponds to \textsf{hamnosys}~\fileversion, dated \filedate. An archival copy can be found at \pkgversiondoiURL{}.}}
 % \author{\orcid{0000-0002-4183-8489}{Marc Schulder} \texorpdfstring{\\\hamnosys{hamceeall,hamthumbopenmod,hamextfingerui,hampalml,hamhead,hamclose,hambehind,hamparbegin,hammovedi,hamreplace,hamfist,hamparend}}{} \and \orcid{0000-0001-7356-8973}{Thomas Hanke} \texorpdfstring{\\\hamnosys{hamcee12,hamthumbopenmod,hamextfingeril,hampalmr,hamneck,hamclose,hamparbegin,hammoveu,hamsmallmod,hamreplace,hamextfingerul,hampalmul,hamparend}}{}}
-% \date{\DTMdate{2021-12-14}}
+% \date{\DTMdate{2022-01-20}}
 %
 %
 % \maketitle
@@ -844,10 +844,11 @@ You can use \hamnosys{hamceeall,hamthumbopenmod,hamfingerstraightmod,hamextfinge
 % \begin{macro}{\hamnosysfont}
 % Load the HamNoSys Unicode font family.
 % This also declares the \lstinline!\hamnosysfont! command for switching to the font (see \cref{sec:font}).
+% \changes{v1.0.1}{2022/01/20}{Fix: Find font file in tex installation}
 %    \begin{macrocode}
 \newfontfamily\hamnosysfont{HamNoSysUnicode}[
-    Path=./,
-    UprightFont=HamNoSysUnicode.ttf,
+    Extension = .ttf,
+    UprightFont = HamNoSysUnicode,
     ]
 %    \end{macrocode}
 % \end{macro}

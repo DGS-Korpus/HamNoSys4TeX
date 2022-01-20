@@ -30,7 +30,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
 \ProvidesPackage{hamnosys}
-    [2021/12/14 v1.0.0 Use HamNoSys in TeX]
+    [2022/01/20 v1.0.1 Use HamNoSys in TeX]
 
 
 
@@ -53,8 +53,8 @@
 
 \ProcessKeyvalOptions{hns}
 \newfontfamily\hamnosysfont{HamNoSysUnicode}[
-    Path=./,
-    UprightFont=HamNoSysUnicode.ttf,
+    Extension = .ttf,
+    UprightFont = HamNoSysUnicode,
     ]
 \newcommand{\texthamnosys}[1]{{\hamnosysfont #1}}
 
