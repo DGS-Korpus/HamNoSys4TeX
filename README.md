@@ -1,6 +1,6 @@
 __Latest release:__ [![DOI](https://www.fdr.uni-hamburg.de/badge/DOI/10.25592/uhhfdm.9643.svg)](https://doi.org/10.25592/uhhfdm.9643)
 
-__This release:__ See [release description](https://github.com/DGS-Korpus/HamNoSys4TeX/releases/tag/v1.0.1).
+__This release:__ See [release description](https://github.com/DGS-Korpus/HamNoSys4TeX/releases/tag/v1.0.2).
 
 
 # _hamnosys_ - Using HamNoSys in TeX
@@ -26,7 +26,7 @@ The package provides three methods of entering HamNoSys symbols:
 For more details, read the [full documentation](hamnosys.pdf) (English) or [project note AP04-2021-02](https://doi.org/10.25592/uhhfdm.9637) of the DGS corpus project (English and German).
 
 # Licence & Copyright
-Copyright (C) 2021 Universität Hamburg
+Copyright (C) 1986-2022 Universität Hamburg
 
 Created by Marc Schulder, Thomas Hanke
 

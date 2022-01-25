@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2021 Universität Hamburg
+% Copyright (C) 1986-2022 Universität Hamburg
 %
 % Created by Marc Schulder, Thomas Hanke
 %
@@ -29,7 +29,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<package>\ProvidesPackage{hamnosys}
 %<*package>
-    [2022/01/20 v1.0.1 Use HamNoSys in TeX]
+    [2022/01/25 v1.0.2 Use HamNoSys in TeX]
 %</package>
 %
 %<*driver>
@@ -204,7 +204,7 @@
 
 %%% URls
 \newcommand{\pkggitURL}{\url{https://github.com/DGS-Korpus/HamNoSys4TeX}}
-\newcommand{\pkgversiondoiURL}{\url{https://doi.org/10.25592/uhhfdm.9834}}
+\newcommand{\pkgversiondoiURL}{\url{https://doi.org/10.25592/uhhfdm.9845}}
 \newcommand{\pkgconceptdoiURL}{\url{https://doi.org/10.25592/uhhfdm.9643}}
 
 \newcommand{\hnssoftwareURL}{\url{https://doi.org/10.25592/uhhfdm.9724}}
@@ -213,10 +213,10 @@
 
 \newcommand{\licencelatexURL}{\url{https://www.latex-project.org/lppl.txt}}
 \newcommand{\licenceccbyHREF}{\href{https://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution 4.0 International}}
-\newcommand{\licenceccbysaHREF}{\href{https://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International}}
 
+\newcommand{\packagecopyright}{1986--2022 Universität Hamburg}
 
-\newcommand{\licenseOther}{The HamNoSysUnicode 4.0 TrueType font may also be obtained under a \licenceccbysaHREF{} licence as part of the \textit{HamNoSys software package} (see \cref{foot:hnssoftware}).}
+\newcommand{\licenseOther}{The HamNoSysUnicode 4.0 TrueType font may also be obtained under a \licenceccbyHREF{} licence as part of the \textit{HamNoSys software package} (see \cref{foot:hnssoftware}).}
 
 
 \EnableCrossrefs
@@ -247,7 +247,8 @@
 %   Right brace   \}     Tilde         \~}
 %
 %
-% % \changes{v1.0.0}{2021/12/14}{Initial version.}
+% % \changes{v1.0.0}{2021/12/14}{Initial version}
+% % \changes{v1.0.2}{2022/01/25}{Fix license/copyright info}
 %
 %
 % \GetFileInfo{hamnosys.dtx}
@@ -263,7 +264,7 @@
 % \title{The \textsf{hamnosys} package\thanks{This document
 %   corresponds to \textsf{hamnosys}~\fileversion, dated \filedate. An archival copy can be found at \pkgversiondoiURL{}.}}
 % \author{\orcid{0000-0002-4183-8489}{Marc Schulder} \texorpdfstring{\\\hamnosys{hamceeall,hamthumbopenmod,hamextfingerui,hampalml,hamhead,hamclose,hambehind,hamparbegin,hammovedi,hamreplace,hamfist,hamparend}}{} \and \orcid{0000-0001-7356-8973}{Thomas Hanke} \texorpdfstring{\\\hamnosys{hamcee12,hamthumbopenmod,hamextfingeril,hampalmr,hamneck,hamclose,hamparbegin,hammoveu,hamsmallmod,hamreplace,hamextfingerul,hampalmul,hamparend}}{}}
-% \date{\DTMdate{2022-01-20}}
+% \date{\DTMdate{2022-01-25}}
 %
 %
 % \maketitle
@@ -321,9 +322,8 @@
 %
 % \subsection{Licence}
 % \label{sec:licence}
-% Copyright \textcopyright{} 1986--2021 Universität Hamburg. Permission is granted to
-% copy, distribute and/or modify this software under the terms of the LaTeX Project
-% Public License, version 1.3c or later.\footnote{\licencelatexURL{}}
+% Copyright \textcopyright{} \packagecopyright{}.
+% Permission is granted to copy, distribute and/or modify this software under the terms of the LaTeX Project Public License, version 1.3c or later.\footnote{\licencelatexURL{}}
 %
 % \licenseOther{}
 %
