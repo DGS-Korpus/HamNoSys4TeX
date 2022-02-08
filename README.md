@@ -1,6 +1,6 @@
 __Latest release:__ [![DOI](https://www.fdr.uni-hamburg.de/badge/DOI/10.25592/uhhfdm.9643.svg)](https://doi.org/10.25592/uhhfdm.9643)
 
-__This release:__ See [release description](https://github.com/DGS-Korpus/HamNoSys4TeX/releases/tag/v1.0.2).
+__This release:__ See [release description](https://github.com/DGS-Korpus/HamNoSys4TeX/releases/tag/v1.0.3).
 
 
 # _hamnosys_ - Using HamNoSys in TeX

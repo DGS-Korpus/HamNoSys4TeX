@@ -29,7 +29,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<package>\ProvidesPackage{hamnosys}
 %<*package>
-    [2022/01/25 v1.0.2 Use HamNoSys in TeX]
+    [2022/02/08 v1.0.3 Use HamNoSys in TeX]
 %</package>
 %
 %<*driver>
@@ -204,7 +204,8 @@
 
 %%% URls
 \newcommand{\pkggitURL}{\url{https://github.com/DGS-Korpus/HamNoSys4TeX}}
-\newcommand{\pkgversiondoiURL}{\url{https://doi.org/10.25592/uhhfdm.9845}}
+\newcommand{\pkgctanURL}{\url{https://www.ctan.org/pkg/hamnosys}}
+\newcommand{\pkgversiondoiURL}{\url{https://doi.org/10.25592/uhhfdm.9901}}
 \newcommand{\pkgconceptdoiURL}{\url{https://doi.org/10.25592/uhhfdm.9643}}
 
 \newcommand{\hnssoftwareURL}{\url{https://doi.org/10.25592/uhhfdm.9724}}
@@ -249,6 +250,7 @@
 %
 % % \changes{v1.0.0}{2021/12/14}{Initial version}
 % % \changes{v1.0.2}{2022/01/25}{Fix license/copyright info}
+% % \changes{v1.0.3}{2022/02/08}{Update installation instructions}
 %
 %
 % \GetFileInfo{hamnosys.dtx}
@@ -264,7 +266,7 @@
 % \title{The \textsf{hamnosys} package\thanks{This document
 %   corresponds to \textsf{hamnosys}~\fileversion, dated \filedate. An archival copy can be found at \pkgversiondoiURL{}.}}
 % \author{\orcid{0000-0002-4183-8489}{Marc Schulder} \texorpdfstring{\\\hamnosys{hamceeall,hamthumbopenmod,hamextfingerui,hampalml,hamhead,hamclose,hambehind,hamparbegin,hammovedi,hamreplace,hamfist,hamparend}}{} \and \orcid{0000-0001-7356-8973}{Thomas Hanke} \texorpdfstring{\\\hamnosys{hamcee12,hamthumbopenmod,hamextfingeril,hampalmr,hamneck,hamclose,hamparbegin,hammoveu,hamsmallmod,hamreplace,hamextfingerul,hampalmul,hamparend}}{}}
-% \date{\DTMdate{2022-01-25}}
+% \date{\DTMdate{2022-02-08}}
 %
 %
 % \maketitle
@@ -295,12 +297,13 @@
 %
 % \subsection{Installation}
 % \label{sec:installation}
-% The source code of the \packagename{hamnosys} package can be found in a git repository on the Github account of the DGS-Korpus project.\footnote{\pkggitURL{}}
+% The source code of the \packagename{hamnosys} package can be found on CTAN\footnote{\pkgctanURL{}} and on GitHub\footnote{\pkggitURL{}}.
 % It is also archived via the research data repository of Universität Hamburg.\footnote{TeX package \packagename{hamnosys} (latest version): \pkgconceptdoiURL{}}
 %
-% As the \packagename{hamnosys} package is still in its test phase, it is not (yet) part of CTAN and is not listed in any TeX distribution.
-% Therefore it has to be integrated manually into each LaTeX project.
-% To do this you download the repository and copy the files
+% As the \packagename{hamnosys} package is a fairly new package, it might not yet be part of your TeX installation.
+% If possible, update your installation using the package manager of your TeX distribution.
+% If that is not an option, you can also manually integrate the package into individual LaTeX projects.
+% To do this you download the repository from GitHub and copy the files
 % \filedirname{hamnosys.sty} and \filedirname{HamNoSysUnicode.ttf} into the main directory of your LaTeX project.
 %
 % To also be able to use HamNoSys elsewhere on your computer (see \cref{sec:editor}), it is recommended to install the font through your operating system as well.
